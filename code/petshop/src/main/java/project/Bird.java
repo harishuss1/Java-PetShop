@@ -24,6 +24,8 @@ public class Bird  extends Animal{
       if(getName().equals("emu")){
         return false;
       } 
+      else{
       return true;
+      }
     }
 }

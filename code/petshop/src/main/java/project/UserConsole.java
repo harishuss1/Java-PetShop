@@ -1,9 +1,9 @@
 package project;
 
-import java.util.InputMismatchException;
+// import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class UserConsole implements IConsole {
+public class UserConsole extends IConsole {
     final static Scanner scanner =  new Scanner(System.in);
 
 
