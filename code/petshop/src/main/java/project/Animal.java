@@ -28,7 +28,7 @@ public class Animal {
     public double getPrice() {
         return price;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
@@ -41,5 +41,6 @@ public class Animal {
     public void setPrice(double price) {
         this.price = price;
     }
+
 
 }
