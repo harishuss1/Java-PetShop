@@ -1,5 +1,6 @@
 package project;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,6 +15,7 @@ final static Scanner scanner =  new Scanner(System.in);
     public static void main( String[] args )
     {
         System.out.println( "Hello World!" );
+        
     }
 
 
@@ -29,10 +31,8 @@ final static Scanner scanner =  new Scanner(System.in);
         scanner.nextLine();
         switch (choice) {
             case 1:
-                System.out.println("1");
                 break;
             case 2:
-                System.out.println("2");
                 break;
             case 3:
                 System.out.println("Exiting the virtual petShop. See you next time!");

@@ -7,9 +7,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHandler {
+public class FileHandler implements IAnimalImporter{
 
-    public List<Animal> loadAnimals(String path) {
+    public List<Animal> loadAnimals(String path)  throws IOException{
         try {
             Path p = Paths.get(path);
             List<String> rows = Files.readAllLines(p);
@@ -36,6 +36,8 @@ public class FileHandler {
 
         return new Animal(name, species, age, price);
     }
+
+   
 
     
 }

@@ -1,5 +1,7 @@
 package project;
 
+import java.util.InputMismatchException;
+import java.util.Scanner;
 public abstract class IConsole {
 
     public  void greet() {
@@ -17,4 +19,22 @@ public abstract class IConsole {
 
     abstract void displayMainMenu();
    
+    public static int getUserChoice() {
+        Scanner scanner = new Scanner(System.in);
+        int choice = 0;
+        boolean isValidInput = false;
+
+        while (!isValidInput) {
+            try {
+                System.out.print("Enter your choice: ");
+                choice = scanner.nextInt();
+                isValidInput = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                scanner.next();
+            }
+        }
+
+        return choice;
+    }
 }
