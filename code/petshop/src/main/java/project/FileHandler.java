@@ -1,22 +1,41 @@
 package project;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler {
-    
-    public List<Animal> loadAnimals (String Path){
-        try{
-            Path p = Paths.get(Path);
+
+    public List<Animal> loadAnimals(String path) {
+        try {
+            Path p = Paths.get(path);
             List<String> rows = Files.readAllLines(p);
 
-            for(String row : rows){
-                String[] columns
+            List<Animal> animals = new ArrayList<>();
+
+            for (String row : rows) {
+                String[] columns = row.split(",");
+                Animal animal = createAnimal(columns);
+                animals.add(animal);
             }
 
+            return animals;
+        } catch (IOException e) {
+            throw new IllegalArgumentException(e);
         }
     }
 
+    public Animal createAnimal(String[] columns) {
+        String name = columns[0].trim();
+        String species = columns[1].trim();
+        int age = Integer.parseInt(columns[2].trim());
+        double price = Double.parseDouble(columns[3].trim());
+
+        return new Animal(name, species, age, price);
+    }
+
+    
 }
