@@ -21,7 +21,7 @@ public class UserConsole extends Console {
         System.out.println("Welcome to the Application!");
         System.out.println("1. View Our Animals");
         System.out.println("2. Search for inventory");
-        System.out.println("3. View Our Promos");
+        System.out.println("3. Apply Promo Code");
         System.out.println("4. Exit");
 
         int choice = getUserChoice();
@@ -29,7 +29,6 @@ public class UserConsole extends Console {
         switch (choice) {
             case 1:
                 // Call view Inventory
-
                 break;
             case 2:
                 // Call a searchinventory method

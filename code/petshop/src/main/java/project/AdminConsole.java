@@ -13,7 +13,6 @@ public class AdminConsole extends Console {
         System.out.println("Username:");
         String username = scanner.nextLine();
         user.setUsername(username);
-        System.out.println(user);
         spacing();
     }
 
