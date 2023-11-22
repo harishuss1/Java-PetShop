@@ -12,7 +12,6 @@ public class UserConsole extends Console {
         System.out.println("Username:");
         String username = scanner.nextLine();
         user.setUsername(username);
-        System.out.println(user);
         spacing();
     }
 
@@ -22,10 +21,12 @@ public class UserConsole extends Console {
         System.out.println("1. View Our Animals");
         System.out.println("2. Search for inventory");
         System.out.println("3. Apply Promo Code");
-        System.out.println("4. Exit");
+        System.out.println("4. View Cart");
+        System.out.println("5. Exit");
+        spacing();
 
         int choice = getUserChoice();
-        scanner.nextLine();
+
         switch (choice) {
             case 1:
                 // Call view Inventory
@@ -37,6 +38,9 @@ public class UserConsole extends Console {
                 // Call viewPromos.
                 break;
             case 4:
+                System.out.println(user);
+                break;
+            case 5:
                 System.exit(1);
                 break;
 
