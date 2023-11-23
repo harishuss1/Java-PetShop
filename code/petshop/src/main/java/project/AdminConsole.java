@@ -23,5 +23,23 @@ public class AdminConsole extends Console {
         System.out.println("2. Manage promo code");
         System.out.println("3. Exit");
         spacing();
+
+        int choice = getUserChoice();
+        scanner.nextLine();
+        switch (choice) {
+            case 1:
+                // manage Inventory
+                break;
+            case 2:
+                // manage Promo codes
+                break;
+            case 3:
+                System.exit(1);
+                break;
+
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                displayMainMenu();
+        }
     }
 }
