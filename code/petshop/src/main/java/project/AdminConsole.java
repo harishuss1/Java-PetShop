@@ -42,8 +42,61 @@ public class AdminConsole extends Console {
     }
 
     public void ManageInventory() {
+        System.out.println("Manging Inventory:");
+        System.out.println("1. Add an Animal");
+        System.out.println("2. Update an Animal");
+        System.out.println("3. Remove an Animal");
+        System.out.println("4. View Animals");
+        System.out.println("5. Return to Menu");
+
+        int choice = getUserChoice();
+        switch (choice) {
+            case 1:
+                
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            case 5:
+                displayMainMenu();
+                break;
+            default:
+            
+                break;
+        }
     }
 
     public void ManagePromoCodes() {
+        System.out.println("Manging Inventory:");
+        System.out.println("1. Add a Promocode");
+        System.out.println("2. Update a Promocode");
+        System.out.println("3. Remove a Promocode");
+        System.out.println("4. View Promos");
+        System.out.println("5. Return to Menu");
+
+        int choice = getUserChoice();
+        switch (choice) {
+            case 1:
+                
+                break;
+            case 2:
+
+                break;
+            case 3:
+
+                break;
+            case 4:
+
+                break;
+            default:
+            
+                break;
+        }
     }
 }
