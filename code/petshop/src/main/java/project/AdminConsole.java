@@ -4,8 +4,10 @@ import java.util.Scanner;
 
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
-
+    
     User user = new User(null, null, 0);
+
+    protected InventoryManager inventoryManager;
 
     @Override
     public void loginSystem() {
@@ -52,22 +54,24 @@ public class AdminConsole extends Console {
         int choice = getUserChoice();
         switch (choice) {
             case 1:
-                
+                addAnimal();
                 break;
             case 2:
-
+                updateAnimal();
                 break;
             case 3:
-
+                removeAnimal();
                 break;
             case 4:
-
+                InventoryManager inventoryManager =  new InventoryManager();
+                inventoryManager.viewAllAnimals();
                 break;
             case 5:
                 displayMainMenu();
                 break;
             default:
-            
+                System.out.println("Invalid choice. Please try again.");
+                ManageInventory();
                 break;
         }
     }
@@ -99,4 +103,61 @@ public class AdminConsole extends Console {
                 break;
         }
     }
+
+    private Animal getAnimalDetailsFromUser() {
+        System.out.println("Enter new name:");
+        String name = scanner.nextLine();
+        System.out.println("Enter new species:");
+        String species = scanner.nextLine();
+        System.out.println("Enter new age:");
+        int age = scanner.nextInt();
+        System.out.println("Enter new price:");
+        double price = scanner.nextDouble();
+        scanner.nextLine(); 
+    
+        return new Animal(name, species, age, price);
+    }
+    
+    private void addAnimal() {
+        Animal addedAnimal = getAnimalDetailsFromUser();
+
+        inventoryManager.addAnimal(addedAnimal);
+        System.out.println("Animal added successfully!");
+    
+        spacing();
+        ManageInventory();
+    }
+    
+    private void updateAnimal() {
+        System.out.println("Updating an Animal:");
+        System.out.println("Enter the name of the animal to update:");
+        String oldName = scanner.nextLine();
+    
+        Animal newAnimal = getAnimalDetailsFromUser(); // Gather updated information
+        inventoryManager.updateAnimal(oldName, newAnimal);
+    
+        System.out.println("Animal updated successfully!");
+    
+        spacing();
+        ManageInventory();
+    }
+    
+    
+    private void removeAnimal() {
+        System.out.println("Removing an Animal:");
+        System.out.println("Enter the name of the animal to remove:");
+        String name = scanner.nextLine();
+    
+        boolean removed = inventoryManager.removeAnimal(name);
+    
+        if (removed) {
+            System.out.println("Animal removed successfully!");
+        } else {
+            System.out.println("Animal not found in inventory.");
+        }
+    
+        spacing();
+        ManageInventory();
+    }
+    
 }

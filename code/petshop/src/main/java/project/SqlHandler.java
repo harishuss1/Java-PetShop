@@ -1,8 +1,8 @@
 package project;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -42,7 +42,44 @@ public class SqlHandler implements IAnimalImporter {
  
         return animals;
     }
-   
+ 
+    
+    public void addAnimal(Animal animal) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String query = "INSERT INTO animals (name, species, age, price) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, animal.getName());
+                preparedStatement.setString(2, animal.getSpecies());
+                preparedStatement.setInt(3, animal.getAge());
+                preparedStatement.setDouble(4, animal.getPrice());
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+
+    public void updateAnimal(Animal oldAnimal, Animal newAnimal) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String query = "UPDATE animals SET name=?, species=?, age=?, price=? WHERE name=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, newAnimal.getName());
+                preparedStatement.setString(2, newAnimal.getSpecies());
+                preparedStatement.setInt(3, newAnimal.getAge());
+                preparedStatement.setDouble(4, newAnimal.getPrice());
+                preparedStatement.setString(5, oldAnimal.getName());
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
+
+    public void deleteAnimal(Animal animal) throws SQLException {
+        try (Connection connection = DriverManager.getConnection(url, username, password)) {
+            String query = "DELETE FROM animals WHERE name=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                preparedStatement.setString(1, animal.getName());
+                preparedStatement.executeUpdate();
+            }
+        }
+    }
 }
 
 

@@ -15,15 +15,23 @@ public class InventoryManager {
        this.animals.add(animal);
    }
 
-   public void updateAnimal(Animal oldAnimal, Animal newAnimal) {
-       int index = this.animals.indexOf(oldAnimal);
-       if (index != -1) {
-           this.animals.set(index, newAnimal);
+   public void updateAnimal(String oldName, Animal newAnimal) {
+       for (int i = 0; i < animals.size(); i++) {
+           if (animals.get(i).getName().equals(oldName)) {
+               animals.set(i, newAnimal);
+               break;
+           }
        }
    }
 
-   public void removeAnimal(Animal animal) {
-       this.animals.remove(animal);
+   public boolean removeAnimal(String name) {
+       for (Animal animal : animals) {
+           if (animal.getName().equals(name)) {
+               animals.remove(animal);
+               return true;
+           }
+       }
+       return false;
    }
 
    public void viewAnimal(Animal animal) {
@@ -37,6 +45,19 @@ public class InventoryManager {
    public void viewAllAnimals() {
        for (Animal animal : this.animals) {
            System.out.println(animal);
+       }
+   }
+
+   public List<Animal> getAnimals() {
+       return animals;
+   }
+
+   // Additional method for searching animals by species
+   public void searchAnimals(String species) {
+       for (Animal animal : animals) {
+           if (animal.getSpecies().equalsIgnoreCase(species)) {
+               System.out.println(animal);
+           }
        }
    }
 }
