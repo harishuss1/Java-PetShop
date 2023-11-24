@@ -31,9 +31,11 @@ public class AdminConsole extends Console {
         switch ((choice)) {
             case 1:
                 ManageInventory();
+                displayMainMenu();
                 break;
             case 2:
                 ManagePromoCodes();
+                displayMainMenu();
                 break;
             
             default:

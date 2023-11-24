@@ -11,7 +11,7 @@ public class FileHandler implements IAnimalImporter{
 
     public List<Animal> loadAnimals()  throws IOException{
         try {
-            String path = "FileName";
+            String path = "animals.txt";
             Path p = Paths.get(path);
             List<String> rows = Files.readAllLines(p);
 
