@@ -52,6 +52,33 @@ public abstract class Console {
         }
     }
 
+    public static void chooseImportMethod() {
+        System.out.println("Choose the method to import animals:");
+        System.out.println("1. SQLHandler");
+        System.out.println("2. FileHandler");
+
+        int choice = getUserChoice();
+
+        switch (choice) {
+            case 1:
+                spacing();
+                // Call SQLHandler to import animals
+                SqlHandler sql = new SqlHandler();
+                sql.loadAnimals();
+                break;
+            case 2:
+                spacing();
+                // Call FileHandler to import animals
+                FileHandler fileHandler = new FileHandler();
+                fileHandler.loadAnimals();
+                break;
+            default:
+                spacing();
+                System.out.println("Invalid choice. Please try again.");
+                chooseImportMethod();
+        }
+    }
+
     public static int getUserChoice() {
         int choice = 0;
         boolean isValidInput = false;

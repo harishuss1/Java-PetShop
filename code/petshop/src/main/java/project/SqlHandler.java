@@ -8,6 +8,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+import java.io.Console;
+
 
 public class SqlHandler implements IAnimalImporter {
 
@@ -15,16 +18,29 @@ public class SqlHandler implements IAnimalImporter {
    private String username;
    private String password;
 
-   public SqlHandler(String url, String username, String password) {
-       this.url = url;
-       this.username = username;
-       this.password = password;
-   }
+//    public SqlHandler(String url, String username, String password) {
+//        this.url = url;
+//        this.username = username;
+//        this.password = password;
+//    }
 
     
     public List<Animal> loadAnimals() throws SQLException {
         List<Animal> animals = new ArrayList<>();
- 
+        Connection conn = null;
+        Scanner scan = new Scanner(System.in);
+        Console console = System.console();
+        System.out.println("Enter username: ");
+        String username = scan.next();
+        System.out.println("Enter password");
+        char[] passwordChars = console.readPassword();
+        String password = new String(passwordChars);
+        
+
+        String url = "jdbc:oracle:thin:@198.168.52.211: 1521/pdbora19c.dawsoncollege.qc.ca";
+        conn = DriverManager.getConnection(url, username, password);
+        System.out.println("Connected to database");
+
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery("SELECT * FROM animals")) {
