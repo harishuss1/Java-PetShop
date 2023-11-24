@@ -1,5 +1,7 @@
 package project;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -52,7 +54,7 @@ public abstract class Console {
         }
     }
 
-    public static void chooseImportMethod() {
+    public static void chooseImportMethod() throws IOException, SQLException {
         System.out.println("Choose the method to import animals:");
         System.out.println("1. SQLHandler");
         System.out.println("2. FileHandler");
