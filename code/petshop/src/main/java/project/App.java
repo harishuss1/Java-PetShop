@@ -12,8 +12,8 @@ public class App {
 
             //Both get a No such file exception.
         
-        // FileHandler file = new FileHandler();
-        // file.loadAnimals();
+        FileHandler file = new FileHandler();
+        file.loadAnimals();
         // test the promo
         // String path = "promo.csv";
         // PromoCodeFileHandler tester = new PromoCodeFileHandler();

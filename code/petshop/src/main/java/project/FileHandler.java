@@ -11,7 +11,7 @@ public class FileHandler implements IAnimalImporter{
 
     public List<Animal> loadAnimals()  throws IOException{
         try {
-            String path = "animals.csv";
+            String path = "src\\main\\resources\\animals.csv";
             Path p = Paths.get(path);
             List<String> rows = Files.readAllLines(p);
 
