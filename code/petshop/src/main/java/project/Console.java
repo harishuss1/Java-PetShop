@@ -1,5 +1,7 @@
 package project;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -49,6 +51,33 @@ public abstract class Console {
                 spacing();
                 System.out.println("Invalid choice. Please try again.");
                 displayLoginMenu();
+        }
+    }
+
+    public static void chooseImportMethod() throws IOException, SQLException {
+        System.out.println("Choose the method to import animals:");
+        System.out.println("1. SQLHandler");
+        System.out.println("2. FileHandler");
+
+        int choice = getUserChoice();
+
+        switch (choice) {
+            case 1:
+                spacing();
+                // Call SQLHandler to import animals
+                SqlHandler sql = new SqlHandler();
+                sql.loadAnimals();
+                break;
+            case 2:
+                spacing();
+                // Call FileHandler to import animals
+                FileHandler fileHandler = new FileHandler();
+                fileHandler.loadAnimals();
+                break;
+            default:
+                spacing();
+                System.out.println("Invalid choice. Please try again.");
+                chooseImportMethod();
         }
     }
 
