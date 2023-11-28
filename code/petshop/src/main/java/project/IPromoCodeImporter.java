@@ -7,8 +7,8 @@ public interface IPromoCodeImporter {
 
     List<PromoCode> loadPromoCodes(String path) throws IOException;
 
-    void writePromoCode(String code, double value) throws IOException;
+    void writePromoCode(String code, double value, String path) throws IOException;
 
-    void deletePromoCode(String code) throws IOException;
+    void deletePromoCode(String code, String path) throws IOException;
 
 }
