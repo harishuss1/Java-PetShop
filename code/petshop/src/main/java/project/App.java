@@ -10,8 +10,8 @@ public class App {
 
     public static void main(String[] args) throws IOException {
 
-        // FileHandler file = new FileHandler();
-        // file.loadAnimals();
+        FileHandler file = new FileHandler();
+        file.loadAnimals();
         // test the promo - TEST PASSED WORKS WITH THIS NEW RELATIVE PATH
         // String path = "code/petshop/src/main/resources/promo.csv";
         // System.out.println(path);
