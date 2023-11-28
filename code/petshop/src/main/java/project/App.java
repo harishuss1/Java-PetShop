@@ -15,7 +15,7 @@ public class App {
         // test the promo - TEST PASSED WORKS WITH THIS NEW RELATIVE PATH
         // String path = "code/petshop/src/main/resources/promo.csv";
         // System.out.println(path);
-        // PromoCodeFileHandler tester = new PromoCodeFileHandler();
+        // FileHandler tester = new FileHandler();
         // tester.loadPromoCodes(path);
 
         // greet user
