@@ -22,7 +22,8 @@ public class UserConsole extends Console {
         System.out.println("2. Search for inventory");
         System.out.println("3. Apply Promo Code");
         System.out.println("4. View Cart");
-        System.out.println("5. Exit");
+        System.out.println("5. Add to Cart");
+        System.out.println("6. Exit");
         spacing();
 
         int choice = getUserChoice();
@@ -38,9 +39,12 @@ public class UserConsole extends Console {
                 applyPromoCode();
                 break;
             case 4:
-                System.out.println(user);
+                viewCart();
                 break;
             case 5:
+                addToCart();
+                break;
+            case 6:
                 System.exit(1);
                 break;
             default:
@@ -71,6 +75,33 @@ public class UserConsole extends Console {
         String promoCode = scanner.nextLine();
         user.setPromoCode(Double.parseDouble(promoCode));
         System.out.println("Promo code applied successfully!");
+        spacing();
+        displayMainMenu();
+    }
+
+    private void viewCart() {
+        System.out.println("Viewing Shopping Cart:");
+        user.viewCart();
+        spacing();
+        displayMainMenu();
+    }
+
+    private void addToCart() {
+        System.out.println("Adding to Shopping Cart:");
+        System.out.println("Enter the name of the animal to add to your cart:");
+        String animalName = scanner.nextLine();
+        
+        // Find the animal in the inventory by name
+        Animal selectedAnimal = inventoryManager.getAnimalByName(animalName);
+
+        if (selectedAnimal != null) {
+            // Add the selected animal to the user's cart
+            user.addToCart(selectedAnimal);
+            System.out.println(animalName + " added to your cart!");
+        } else {
+            System.out.println("Animal not found in inventory.");
+        }
+
         spacing();
         displayMainMenu();
     }

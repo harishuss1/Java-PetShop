@@ -1,9 +1,12 @@
 package project;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
+    String path = "code/petshop/src/main/resources/promo.csv";
+    FileHandler fileHandler = new FileHandler();
 
     User user = new User(null, null, 0);
 
@@ -19,7 +22,7 @@ public class AdminConsole extends Console {
     }
 
     @Override
-    public void displayMainMenu() {
+    public void displayMainMenu() throws IOException {
         System.out.println("Menu:");
         System.out.println("1. Manage inventory");
         System.out.println("2. Manage promo code");
@@ -43,6 +46,7 @@ public class AdminConsole extends Console {
             case 3:
                 spacing();
                 ManageAdmins();
+                displayMainMenu();
                 break;
             case 4:
                 spacing();
@@ -56,8 +60,8 @@ public class AdminConsole extends Console {
         }
     }
 
-    public void ManageInventory() {
-        System.out.println("Manging Inventory:");
+    public void ManageInventory() throws IOException {
+        System.out.println("Managing Inventory:");
         System.out.println("1. Add an Animal");
         System.out.println("2. Update an Animal");
         System.out.println("3. Remove an Animal");
@@ -95,8 +99,8 @@ public class AdminConsole extends Console {
         }
     }
 
-    public void ManagePromoCodes() {
-        System.out.println("Manging Inventory:");
+    public void ManagePromoCodes() throws IOException {
+        System.out.println("Managing Promocode:");
         System.out.println("1. Add a Promocode");
         System.out.println("2. Update a Promocode");
         System.out.println("3. Remove a Promocode");
@@ -107,17 +111,26 @@ public class AdminConsole extends Console {
         switch (choice) {
             case 1:
                 spacing();
-                // add promo
+                addPromoCode();
                 break;
             case 2:
                 spacing();
                 // update promo
                 break;
             case 3:
-                // remove promo
+                spacing();
+                System.out.println("Which code: ");
+                String codeToDelete = scanner.nextLine();
+
                 break;
             case 4:
-                // remove promo
+                spacing();
+                fileHandler.prntPromo(path);
+                spacing();
+                break;
+            case 5:
+                spacing();
+                // displayMainMenu();
                 break;
             default:
                 spacing();
@@ -150,7 +163,6 @@ public class AdminConsole extends Console {
                 break;
             case 4:
                 spacing();
-                displayMainMenu();
                 break;
             default:
                 spacing();
@@ -174,7 +186,7 @@ public class AdminConsole extends Console {
         return new Animal(name, species, age, price);
     }
 
-    private void addAnimal() {
+    private void addAnimal() throws IOException {
         Animal addedAnimal = getAnimalDetailsFromUser();
 
         inventoryManager.addAnimal(addedAnimal);
@@ -184,7 +196,7 @@ public class AdminConsole extends Console {
         ManageInventory();
     }
 
-    private void updateAnimal() {
+    private void updateAnimal() throws IOException {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
@@ -198,7 +210,7 @@ public class AdminConsole extends Console {
         ManageInventory();
     }
 
-    private void removeAnimal() {
+    private void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");
         System.out.println("Enter the name of the animal to remove:");
         String name = scanner.nextLine();
@@ -213,6 +225,19 @@ public class AdminConsole extends Console {
 
         spacing();
         ManageInventory();
+    }
+
+    private void addPromoCode() throws IOException {
+        System.out.println("New code: ");
+        String codeToAdd = scanner.nextLine();
+
+        System.out.println("Discount: ");
+        int discount = scanner.nextInt();
+
+        fileHandler.writePromoCode(codeToAdd, discount, path);
+
+        spacing();
+        ManagePromoCodes();
     }
 
 }

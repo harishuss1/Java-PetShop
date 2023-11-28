@@ -1,15 +1,16 @@
 package project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
     private String username;
-    private List<Animal> Cart;
+    private List<Animal> cart;
     private double promoCode; // 10, 20, 30, etc...
 
-    public User(String username, List<Animal> Cart, double promoCode) {
+    public User(String username, List<Animal> cart, double promoCode) {
         this.username = username;
-        this.Cart = Cart;
+        this.cart = cart;
         this.promoCode = promoCode;
     }
 
@@ -18,7 +19,7 @@ public class User {
     }
 
     public List<Animal> getCart() {
-        return Cart;
+        return cart;
     }
 
     public double getPromoCode() {
@@ -30,22 +31,44 @@ public class User {
     }
 
     public void setCart(List<Animal> cart) {
-        Cart = cart;
+        this.cart = cart;
     }
 
     public void setPromoCode(double promoCode) {
         this.promoCode = promoCode;
     }
 
+    public void addToCart(Animal animal) {
+        cart.add(animal);
+        System.out.println("Added " + animal.getName() + " to your shopping cart.");
+    }
+
+    public void viewCart() {
+        System.out.println("Your Shopping Cart:");
+        for (Animal animal : cart) {
+            System.out.println(animal);
+        }
+        System.out.println("Total Price: $" + calculateTotalPrice());
+    }
+
+    private double calculateTotalPrice() {
+        double totalPrice = 0;
+        for (Animal animal : cart) {
+            totalPrice += animal.getPrice();
+        }
+        // Apply promo code
+        totalPrice *= (1 - promoCode / 100.0);
+        return totalPrice;
+    }
+
     public String toString() {
         String promoCodeBuilder = "None";
-        if (!(this.promoCode == 0)) {
+        if (promoCode != 0) {
             promoCodeBuilder = promoCode + "% off";
         }
 
-        return "Username: " + this.username + "\n" +
+        return "Username: " + username + "\n" +
                 "Promo Code: " + promoCodeBuilder + "\n" +
-                "Cart: " + this.Cart;
+                "Cart: " + cart;
     }
-
 }
