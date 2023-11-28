@@ -51,6 +51,15 @@ public class InventoryManager {
    public List<Animal> getAnimals() {
        return animals;
    }
+   
+   public Animal getAnimalByName(String name) {
+    for (Animal animal : animals) {
+        if (animal.getName().equals(name)) {
+            return animal;
+        }
+    }
+    return null; // Animal not found
+}
 
    // Additional method for searching animals by species
    public void searchAnimals(String species) {
