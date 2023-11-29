@@ -9,17 +9,6 @@ public class App {
     final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-       
-
-
-        // FileHandler file = new FileHandler();
-        // file.loadAnimals();
-        // test the promo - TEST PASSED WORKS WITH THIS NEW RELATIVE PATH
-        // String path = "code/petshop/src/main/resources/promo.csv";
-        // System.out.println(path);
-        // FileHandler tester = new FileHandler();
-        // tester.loadPromoCodes(path);
-
         // greet user
         greet();
         // login as admin or user?
