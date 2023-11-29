@@ -38,8 +38,9 @@ public abstract class Console {
                 adminCSL.displayMainMenu();
                 break;
             case 2:
-                spacing();
-                UserConsole userCSL = new UserConsole();
+                spacing(); 
+                InventoryManager inventoryManager = new InventoryManager();
+                UserConsole userCSL = new UserConsole(inventoryManager);
                 userCSL.loginSystem();
                 userCSL.displayMainMenu();
                 break;

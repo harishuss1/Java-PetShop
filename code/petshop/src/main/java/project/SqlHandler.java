@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.Console;
 
-public class SqlHandler implements Importer {
+public class SqlHandler  {
 
     private String url;
     private String username;
