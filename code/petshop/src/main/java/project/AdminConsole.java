@@ -1,13 +1,18 @@
 package project;
 
+import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
-    
+    String path = "code/petshop/src/main/resources/promo.csv";
+    String animalPath = "code/petshop/src/main/resources/animals.csv"; 
+    FileHandler fileHandler = new FileHandler();
+    InventoryManager inventoryManager = new InventoryManager();
+
     User user = new User(null, null, 0);
 
-    protected InventoryManager inventoryManager;
 
     @Override
     public void loginSystem() {
@@ -19,67 +24,86 @@ public class AdminConsole extends Console {
     }
 
     @Override
-    public void displayMainMenu() {
+    public void displayMainMenu() throws IOException {
         System.out.println("Menu:");
         System.out.println("1. Manage inventory");
         System.out.println("2. Manage promo code");
-        System.out.println("3. Exit");
+        System.out.println("3. Manage admins");
+        System.out.println("4. Exit");
         spacing();
 
         int choice = getUserChoice();
-        scanner.nextLine();
+        // scanner.nextLine();
         switch ((choice)) {
             case 1:
+                spacing();
                 ManageInventory();
                 displayMainMenu();
                 break;
             case 2:
+                spacing();
                 ManagePromoCodes();
                 displayMainMenu();
                 break;
-            
+            case 3:
+                spacing();
+                ManageAdmins();
+                displayMainMenu();
+                break;
+            case 4:
+                spacing();
+                System.out.println("Exiting the virtual petShop. See you next time!");
+                break;
             default:
+                spacing();
                 System.out.println("Invalid choice. Please try again.");
                 displayMainMenu();
                 break;
         }
     }
 
-    public void ManageInventory() {
-        System.out.println("Manging Inventory:");
+    public void ManageInventory() throws IOException {
+        System.out.println("Managing Inventory:");
         System.out.println("1. Add an Animal");
         System.out.println("2. Update an Animal");
         System.out.println("3. Remove an Animal");
         System.out.println("4. View Animals");
         System.out.println("5. Return to Menu");
 
+        inventoryManager.loadAnimals(fileHandler.loadAnimals());
+
         int choice = getUserChoice();
         switch (choice) {
             case 1:
+                spacing();
                 addAnimal();
                 break;
             case 2:
+                spacing();
                 updateAnimal();
                 break;
             case 3:
+                spacing();
                 removeAnimal();
                 break;
             case 4:
-                InventoryManager inventoryManager =  new InventoryManager();
-                inventoryManager.viewAllAnimals();
+                spacing();
+                viewAllAnimals();
                 break;
             case 5:
+                spacing();
                 displayMainMenu();
                 break;
             default:
+                spacing();
                 System.out.println("Invalid choice. Please try again.");
                 ManageInventory();
                 break;
         }
     }
 
-    public void ManagePromoCodes() {
-        System.out.println("Manging Inventory:");
+    public void ManagePromoCodes() throws IOException {
+        System.out.println("Managing Promocode:");
         System.out.println("1. Add a Promocode");
         System.out.println("2. Update a Promocode");
         System.out.println("3. Remove a Promocode");
@@ -89,19 +113,61 @@ public class AdminConsole extends Console {
         int choice = getUserChoice();
         switch (choice) {
             case 1:
-                
+                spacing();
+                addPromoCode();
                 break;
             case 2:
-
+                spacing();
+                updateDiscountPromoCode();
                 break;
             case 3:
-
+                spacing();
+                removePromoCode();
                 break;
             case 4:
-
+                spacing();
+                viewPromoCode();
+                spacing();
+                break;
+            case 5:
+                spacing();
                 break;
             default:
-            
+                spacing();
+                System.out.println("Invalid choice. Please try again.");
+                ManagePromoCodes();
+                break;
+        }
+    }
+
+    public void ManageAdmins() {
+        System.out.println("Managing Admins:");
+        System.out.println("1. Add an admin");
+        System.out.println("2. Update an admin");
+        System.out.println("3. Remove an admin");
+        System.out.println("4. Return to Menu");
+
+        int choice = getUserChoice();
+        switch (choice) {
+            case 1:
+                spacing();
+                // add admin
+                break;
+            case 2:
+                spacing();
+                // update admin
+                break;
+            case 3:
+                spacing();
+                // remove admin
+                break;
+            case 4:
+                spacing();
+                break;
+            default:
+                spacing();
+                System.out.println("Invalid choice. Please try again.");
+                ManageAdmins();
                 break;
         }
     }
@@ -115,51 +181,127 @@ public class AdminConsole extends Console {
         int age = scanner.nextInt();
         System.out.println("Enter new price:");
         double price = scanner.nextDouble();
-        scanner.nextLine(); 
-    
+        scanner.nextLine();
+
         return new Animal(name, species, age, price);
     }
-    
-    private void addAnimal() {
+
+    private void addAnimal() throws IOException {
         Animal addedAnimal = getAnimalDetailsFromUser();
 
         inventoryManager.addAnimal(addedAnimal);
+        fileHandler.writeAnimal(addedAnimal, animalPath);
+
         System.out.println("Animal added successfully!");
-    
+
         spacing();
         ManageInventory();
     }
-    
-    private void updateAnimal() {
+
+    private void updateAnimal() throws IOException {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
-    
+
         Animal newAnimal = getAnimalDetailsFromUser(); // Gather updated information
         inventoryManager.updateAnimal(oldName, newAnimal);
-    
+        fileHandler.deleteAnimal(oldName, animalPath);
+        fileHandler.writeAnimal(newAnimal, animalPath);
+
         System.out.println("Animal updated successfully!");
-    
+
         spacing();
         ManageInventory();
     }
-    
-    
-    private void removeAnimal() {
+
+    private void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");
         System.out.println("Enter the name of the animal to remove:");
         String name = scanner.nextLine();
-    
+
         boolean removed = inventoryManager.removeAnimal(name);
-    
+
         if (removed) {
+            fileHandler.deleteAnimal(name, animalPath);
             System.out.println("Animal removed successfully!");
         } else {
             System.out.println("Animal not found in inventory.");
         }
-    
+
         spacing();
         ManageInventory();
     }
-    
+
+    private void viewAllAnimals() throws IOException {
+        // inventoryManager.loadAnimals(fileHandler.loadAnimals());
+        inventoryManager.viewAllAnimals();
+    }
+
+    private void addPromoCode() throws IOException {
+        System.out.println("New code: ");
+        String codeToAdd = scanner.nextLine();
+
+        System.out.println("Discount: ");
+        int discount = validDiscount();
+
+        // fix
+        scanner.nextLine();
+
+        fileHandler.writePromoCode(codeToAdd, discount, path);
+
+        System.out.println("Promocode added sucessfully!");
+
+        spacing();
+    }
+
+    private void updateDiscountPromoCode() throws IOException {
+        System.out.println("Update code: ");
+        String codeToUpdate = scanner.nextLine();
+
+        System.out.println("Updated Discount: ");
+        int discount = validDiscount();
+
+        // fix
+        scanner.nextLine();
+
+        fileHandler.updatePromoCode(codeToUpdate, discount, path);
+
+        spacing();
+    }
+
+    private void removePromoCode() throws IOException {
+        System.out.println("Delete code: ");
+        String codeToDelete = scanner.nextLine();
+
+        fileHandler.deletePromoCode(codeToDelete, path);
+
+        spacing();
+    }
+
+    private void viewPromoCode() throws IOException {
+        fileHandler.prntPromo(path);
+    }
+
+    private int validDiscount() {
+        int discount = 0;
+        boolean isValidInput = false;
+
+        while (!isValidInput) {
+            try {
+                discount = scanner.nextInt();
+
+                if (discount >= 1 && discount <= 99) {
+                    isValidInput = true;
+                } else {
+                    System.out.println("Discount must be between 1 to 99. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next();
+            }
+        }
+
+        return discount;
+    }
+
 }

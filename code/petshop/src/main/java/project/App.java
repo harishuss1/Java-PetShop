@@ -9,16 +9,6 @@ public class App {
     final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-
-            //Both get a No such file exception.
-        
-        // FileHandler file = new FileHandler();
-        // file.loadAnimals();
-        // test the promo
-        // String path = "promo.csv";
-        // PromoCodeFileHandler tester = new PromoCodeFileHandler();
-        // tester.loadPromoCodes(path);
-
         // greet user
         greet();
         // login as admin or user?

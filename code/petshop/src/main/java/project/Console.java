@@ -21,7 +21,7 @@ public abstract class Console {
         System.out.println();
     }
 
-    public static void displayLoginMenu() {
+    public static void displayLoginMenu() throws IOException {
         System.out.println("Sign in:");
         System.out.println("1. Admin");
         System.out.println("2. User");
@@ -38,8 +38,9 @@ public abstract class Console {
                 adminCSL.displayMainMenu();
                 break;
             case 2:
-                spacing();
-                UserConsole userCSL = new UserConsole();
+                spacing(); 
+                InventoryManager inventoryManager = new InventoryManager();
+                UserConsole userCSL = new UserConsole(inventoryManager);
                 userCSL.loginSystem();
                 userCSL.displayMainMenu();
                 break;
@@ -102,7 +103,7 @@ public abstract class Console {
         System.out.println("===========================");
     }
 
-    abstract void displayMainMenu();
+    abstract void displayMainMenu() throws IOException;
 
     abstract void loginSystem();
 
