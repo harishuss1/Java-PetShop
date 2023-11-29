@@ -1,6 +1,7 @@
 package project;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class AdminConsole extends Console {
@@ -117,22 +118,19 @@ public class AdminConsole extends Console {
                 break;
             case 2:
                 spacing();
-                // update promo
+                updateDiscountPromoCode();
                 break;
             case 3:
                 spacing();
-                System.out.println("Which code: ");
-                String codeToDelete = scanner.nextLine();
-
+                removePromoCode();
                 break;
             case 4:
                 spacing();
-                fileHandler.prntPromo(path);
+                viewPromoCode();
                 spacing();
                 break;
             case 5:
                 spacing();
-                // displayMainMenu();
                 break;
             default:
                 spacing();
@@ -244,12 +242,66 @@ public class AdminConsole extends Console {
         String codeToAdd = scanner.nextLine();
 
         System.out.println("Discount: ");
-        int discount = scanner.nextInt();
+        int discount = validDiscount();
+
+        // fix
+        scanner.nextLine();
 
         fileHandler.writePromoCode(codeToAdd, discount, path);
 
+        System.out.println("Promocode added sucessfully!");
+
         spacing();
-        ManagePromoCodes();
+    }
+
+    private void updateDiscountPromoCode() throws IOException {
+        System.out.println("Update code: ");
+        String codeToUpdate = scanner.nextLine();
+
+        System.out.println("Updated Discount: ");
+        int discount = validDiscount();
+
+        // fix
+        scanner.nextLine();
+
+        fileHandler.updatePromoCode(codeToUpdate, discount, path);
+
+        spacing();
+    }
+
+    private void removePromoCode() throws IOException {
+        System.out.println("Delete code: ");
+        String codeToDelete = scanner.nextLine();
+
+        fileHandler.deletePromoCode(codeToDelete, path);
+
+        spacing();
+    }
+
+    private void viewPromoCode() throws IOException {
+        fileHandler.prntPromo(path);
+    }
+
+    private int validDiscount() {
+        int discount = 0;
+        boolean isValidInput = false;
+
+        while (!isValidInput) {
+            try {
+                discount = scanner.nextInt();
+
+                if (discount >= 1 && discount <= 99) {
+                    isValidInput = true;
+                } else {
+                    System.out.println("Discount must be between 1 to 99. Please try again.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid number.");
+                scanner.next();
+            }
+        }
+
+        return discount;
     }
 
 }

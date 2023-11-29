@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHandler implements IAnimalImporter, IPromoCodeImporter {
+public class FileHandler implements Importer {
 
     // ANIMAL SECTION
     public List<Animal> loadAnimals() throws IOException {
@@ -25,6 +25,7 @@ public class FileHandler implements IAnimalImporter, IPromoCodeImporter {
 
         return animals;
     }
+
 
     public Animal createAnimal(String[] columns) {
         String name = columns[0].trim();
@@ -110,6 +111,11 @@ public class FileHandler implements IAnimalImporter, IPromoCodeImporter {
         Files.write(Paths.get(path), PromoCodeStrings);
     }
 
+    public void updatePromoCode(String code, double newValue, String path) throws IOException {
+        deletePromoCode(code, path);
+        writePromoCode(code, newValue, path);
+    }
+
     public void deletePromoCode(String code, String path) throws IOException {
         List<PromoCode> promoCodesList = new ArrayList<>();
         promoCodesList = loadPromoCodes(path);
@@ -117,10 +123,8 @@ public class FileHandler implements IAnimalImporter, IPromoCodeImporter {
         int index = 0;
 
         for (PromoCode promo : promoCodesList) {
-            System.out.println(promo.getCode());
             String oldcode = promo.getCode();
             if (oldcode.equals(code)) {
-                System.out.println("they are equal");
                 promoCodesList.remove(index);
                 break;
             }
@@ -145,6 +149,6 @@ public class FileHandler implements IAnimalImporter, IPromoCodeImporter {
 
     }
 
-    // ADMIN SECTION
 
+   
 }
