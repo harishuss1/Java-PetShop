@@ -13,7 +13,7 @@ public interface Importer {
 
     void writePromoCode(String code, double value, String path) throws IOException;
 
-    void updatePromoCode(String code, int newValue, String path) throws IOException;
+    void updatePromoCode(String code, double newValue, String path) throws IOException;
 
     void deletePromoCode(String code, String path) throws IOException;
 

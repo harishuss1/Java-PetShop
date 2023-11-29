@@ -109,5 +109,71 @@ public class FileHandler implements Importer {
     }
 
     // ADMIN SECTION
+    public List<Admin> loadAdmins(String path) throws IOException {
 
+        Path p = Paths.get(path);
+
+        List<String> adminsString = Files.readAllLines(p);
+        List<Admin> admins = new ArrayList<>();
+
+        for (String admin : adminsString) {
+            String[] pieces = admin.split(",");
+            String user = pieces[0];
+            String password = pieces[1];
+            admins.add(new Admin(user, password));
+        }
+
+        return admins;
+    }
+
+    public void writeAdmin(String user, String password, String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+        adminsList.add(new Admin(user, password));
+
+        List<String> adminsStrings = new ArrayList<>();
+        for (Admin admin : adminsList) {
+            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+        }
+
+        Files.write(Paths.get(path), adminsStrings);
+    }
+
+    public void updateAdmin(String user, String newPassword, String path) throws IOException {
+        deleteAdmin(user, path);
+        writeAdmin(user, newPassword, path);
+    }
+
+    public void deleteAdmin(String user, String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        int index = 0;
+
+        for (Admin admin : adminsList) {
+            String oldUser = admin.getUser();
+            if (oldUser.equals(user)) {
+                adminsList.remove(index);
+                break;
+            }
+            index++;
+        }
+
+        List<String> adminsStrings = new ArrayList<>();
+        for (Admin admin : adminsList) {
+            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+        }
+
+        Files.write(Paths.get(path), adminsStrings);
+    }
+
+    public void prntAdmin(String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        for (int i = 0; i < adminsList.size(); i++) {
+            System.out.println(adminsList.get(i));
+        }
+
+    }
 }

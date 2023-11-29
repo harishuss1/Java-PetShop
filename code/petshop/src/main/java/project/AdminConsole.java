@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
-    String path = "code/petshop/src/main/resources/promo.csv";
+    String promoPath = "code/petshop/src/main/resources/promo.csv";
+    String adminPath = "code/petshop/src/main/resources/admin.csv";
+    String animalsPath = "code/petshop/src/main/resources/animals.csv";
     FileHandler fileHandler = new FileHandler();
 
     User user = new User(null, null, 0);
@@ -138,28 +140,34 @@ public class AdminConsole extends Console {
         }
     }
 
-    public void ManageAdmins() {
+    public void ManageAdmins() throws IOException {
         System.out.println("Managing Admins:");
         System.out.println("1. Add an admin");
         System.out.println("2. Update an admin");
         System.out.println("3. Remove an admin");
-        System.out.println("4. Return to Menu");
+        System.out.println("4: View all admins");
+        System.out.println("5. Return to Menu");
 
         int choice = getUserChoice();
         switch (choice) {
             case 1:
                 spacing();
-                // add admin
+                addAdmin();
                 break;
             case 2:
                 spacing();
-                // update admin
+                updateAdmin();
                 break;
             case 3:
                 spacing();
-                // remove admin
+                removeAdmin();
                 break;
             case 4:
+                spacing();
+                viewAdmin();
+                spacing();
+                break;
+            case 5:
                 spacing();
                 break;
             default:
@@ -235,7 +243,7 @@ public class AdminConsole extends Console {
         // fix
         scanner.nextLine();
 
-        fileHandler.writePromoCode(codeToAdd, discount, path);
+        fileHandler.writePromoCode(codeToAdd, discount, promoPath);
 
         System.out.println("Promocode added sucessfully!");
 
@@ -252,7 +260,7 @@ public class AdminConsole extends Console {
         // fix
         scanner.nextLine();
 
-        fileHandler.updatePromoCode(codeToUpdate, discount, path);
+        fileHandler.updatePromoCode(codeToUpdate, discount, promoPath);
 
         spacing();
     }
@@ -261,13 +269,13 @@ public class AdminConsole extends Console {
         System.out.println("Delete code: ");
         String codeToDelete = scanner.nextLine();
 
-        fileHandler.deletePromoCode(codeToDelete, path);
+        fileHandler.deletePromoCode(codeToDelete, promoPath);
 
         spacing();
     }
 
     private void viewPromoCode() throws IOException {
-        fileHandler.prntPromo(path);
+        fileHandler.prntPromo(promoPath);
     }
 
     private int validDiscount() {
@@ -290,6 +298,45 @@ public class AdminConsole extends Console {
         }
 
         return discount;
+    }
+
+    private void addAdmin() throws IOException {
+        System.out.println("New admin: ");
+        String adminToAdd = scanner.nextLine();
+
+        System.out.println("Password: ");
+        String password = scanner.nextLine();
+
+        fileHandler.writeAdmin(adminToAdd, password, adminPath);
+
+        System.out.println("Admin added sucessfully!");
+
+        spacing();
+    }
+
+    private void updateAdmin() throws IOException {
+        System.out.println("Update admin: ");
+        String adminToUpdate = scanner.nextLine();
+
+        System.out.println("Updated Password: ");
+        String newPassword = scanner.nextLine();
+
+        fileHandler.updateAdmin(adminToUpdate, newPassword, adminPath);
+
+        spacing();
+    }
+
+    private void removeAdmin() throws IOException {
+        System.out.println("Delete admin: ");
+        String adminToDelete = scanner.nextLine();
+
+        fileHandler.deleteAdmin(adminToDelete, adminPath);
+
+        spacing();
+    }
+
+    private void viewAdmin() throws IOException {
+        fileHandler.prntAdmin(adminPath);
     }
 
 }
