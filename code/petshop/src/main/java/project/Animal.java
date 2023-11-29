@@ -42,5 +42,13 @@ public class Animal {
         this.price = price;
     }
 
+    public String toString() {
+        return "Animal Details:\n" +
+                "Name: " + name + "\n" +
+                "Species: " + species + "\n" +
+                "Age: " + age + " years\n" +
+                "Price: $" + price+
+                "\n";
+    }
 
 }
