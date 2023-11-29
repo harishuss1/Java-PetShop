@@ -15,11 +15,9 @@ public class AdminConsole extends Console {
     User user = new User(null, null, 0);
 
     @Override
-    public void loginSystem() {
+    public void loginSystem() throws IOException {
         System.out.println("Admin login");
-        System.out.println("Username:");
-        String username = scanner.nextLine();
-        user.setUsername(username);
+        adminLogin();
         spacing();
     }
 
@@ -347,6 +345,37 @@ public class AdminConsole extends Console {
 
     private void viewAdmin() throws IOException {
         fileHandler.prntAdmin(adminPath);
+    }
+
+    private void adminLogin() throws IOException {
+        // variables
+        boolean successfulLogin = false;
+        int tries = 3;
+
+        // while not successful username and password
+        while (!successfulLogin) {
+            if (tries > 0) {
+                // ask the important questions
+                System.out.println("Username:");
+                String username = scanner.nextLine();
+                System.out.println("Password: ");
+                String password = scanner.nextLine();
+
+                // if username and password match success is true otherwise incorrect
+                if ((fileHandler.matchingAdmin(username, password, adminPath))) {
+                    successfulLogin = true;
+                } else {
+                    // tries + 1
+                    tries--;
+                    spacing();
+                    System.out.println("Incorrect, " + tries + " attempts left");
+                }
+            } else {
+                System.out.println("You have been locked out");
+                spacing();
+                System.exit(1);
+            }
+        }
     }
 
 }

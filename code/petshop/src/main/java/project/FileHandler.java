@@ -215,4 +215,28 @@ public class FileHandler implements Importer {
         }
 
     }
+
+    public boolean matchingAdmin(String username, String password, String path) throws IOException {
+        // get admin list
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        boolean match = false;
+
+        // for every admin in the admin list
+        for (Admin admin : adminsList) {
+            // set variables from list
+            String usernameFromList = admin.getUser();
+            String passwordFromList = admin.getPassword();
+
+            // if match with admin list true
+            if (usernameFromList.equals(username) && passwordFromList.equals(password)) {
+                match = true;
+            }
+        }
+
+        // return result
+        return match;
+    }
+
 }
