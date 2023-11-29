@@ -1,11 +1,19 @@
 package project;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UserConsole extends Console {
 
-    User user = new User(null, null, 0);
+    private User user = new User(null, null, 0);
+    // private InventoryManager inventoryManager;
+    FileHandler fileHandler = new FileHandler();
     InventoryManager inventoryManager = new InventoryManager();
+
+    // Constructor to set the InventoryManager
+    public UserConsole(InventoryManager inventoryManager) {
+        this.inventoryManager = inventoryManager;
+    }
 
     @Override
     public void loginSystem() {
@@ -27,7 +35,12 @@ public class UserConsole extends Console {
         spacing();
 
         int choice = getUserChoice();
-
+        try {
+            inventoryManager.loadAnimals(fileHandler.loadAnimals());
+        } catch (IOException e) {
+            
+           System.out.println("Thers an issue with loading the animals");
+        }
         switch (choice) {
             case 1:
                 viewAnimals();
@@ -63,7 +76,9 @@ public class UserConsole extends Console {
     private void searchInventory() {
         System.out.println("Searching for inventory:");
         System.out.println("Enter species to search:");
+        scanner.nextLine();
         String species = scanner.nextLine();
+        
         inventoryManager.searchAnimals(species);
         spacing();
         displayMainMenu();
@@ -72,9 +87,15 @@ public class UserConsole extends Console {
     private void applyPromoCode() {
         System.out.println("Applying Promo Code:");
         System.out.println("Enter promo code:");
-        String promoCode = scanner.nextLine();
-        user.setPromoCode(Double.parseDouble(promoCode));
-        System.out.println("Promo code applied successfully!");
+
+        try {
+            String promoCode = scanner.nextLine();
+            user.setPromoCode(Double.parseDouble(promoCode));
+            System.out.println("Promo code applied successfully!");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid promo code format. Please enter a valid numeric value.");
+        }
+
         spacing();
         displayMainMenu();
     }
@@ -90,7 +111,7 @@ public class UserConsole extends Console {
         System.out.println("Adding to Shopping Cart:");
         System.out.println("Enter the name of the animal to add to your cart:");
         String animalName = scanner.nextLine();
-        
+
         // Find the animal in the inventory by name
         Animal selectedAnimal = inventoryManager.getAnimalByName(animalName);
 

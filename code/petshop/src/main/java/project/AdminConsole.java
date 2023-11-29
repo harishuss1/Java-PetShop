@@ -6,11 +6,12 @@ import java.util.Scanner;
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
     String path = "code/petshop/src/main/resources/promo.csv";
+    String animalPath = "code/petshop/src/main/resources/animals.csv"; 
     FileHandler fileHandler = new FileHandler();
+    InventoryManager inventoryManager = new InventoryManager();
 
     User user = new User(null, null, 0);
 
-    protected InventoryManager inventoryManager;
 
     @Override
     public void loginSystem() {
@@ -68,6 +69,8 @@ public class AdminConsole extends Console {
         System.out.println("4. View Animals");
         System.out.println("5. Return to Menu");
 
+        inventoryManager.loadAnimals(fileHandler.loadAnimals());
+
         int choice = getUserChoice();
         switch (choice) {
             case 1:
@@ -84,8 +87,7 @@ public class AdminConsole extends Console {
                 break;
             case 4:
                 spacing();
-                InventoryManager inventoryManager = new InventoryManager();
-                inventoryManager.viewAllAnimals();
+                viewAllAnimals();
                 break;
             case 5:
                 spacing();
@@ -190,6 +192,8 @@ public class AdminConsole extends Console {
         Animal addedAnimal = getAnimalDetailsFromUser();
 
         inventoryManager.addAnimal(addedAnimal);
+        fileHandler.writeAnimal(addedAnimal, animalPath);
+
         System.out.println("Animal added successfully!");
 
         spacing();
@@ -203,6 +207,8 @@ public class AdminConsole extends Console {
 
         Animal newAnimal = getAnimalDetailsFromUser(); // Gather updated information
         inventoryManager.updateAnimal(oldName, newAnimal);
+        fileHandler.deleteAnimal(oldName, animalPath);
+        fileHandler.writeAnimal(newAnimal, animalPath);
 
         System.out.println("Animal updated successfully!");
 
@@ -218,6 +224,7 @@ public class AdminConsole extends Console {
         boolean removed = inventoryManager.removeAnimal(name);
 
         if (removed) {
+            fileHandler.deleteAnimal(name, animalPath);
             System.out.println("Animal removed successfully!");
         } else {
             System.out.println("Animal not found in inventory.");
@@ -225,6 +232,11 @@ public class AdminConsole extends Console {
 
         spacing();
         ManageInventory();
+    }
+
+    private void viewAllAnimals() throws IOException {
+        // inventoryManager.loadAnimals(fileHandler.loadAnimals());
+        inventoryManager.viewAllAnimals();
     }
 
     private void addPromoCode() throws IOException {
