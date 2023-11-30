@@ -26,7 +26,6 @@ public class FileHandler implements Importer {
         return animals;
     }
 
-
     public Animal createAnimal(String[] columns) {
         String name = columns[0].trim();
         String species = columns[1].trim();
@@ -43,25 +42,26 @@ public class FileHandler implements Importer {
             System.out.println(animalsList.get(i));
         }
     }
+
     public void writeAnimal(Animal animal, String path) throws IOException {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
         animalsList.add(animal);
-    
+
         List<String> animalStrings = new ArrayList<>();
         for (Animal a : animalsList) {
             animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
         }
-    
+
         Files.write(Paths.get(path), animalStrings);
     }
-    
+
     public void deleteAnimal(String name, String path) throws IOException {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
-    
+
         int index = 0;
-    
+
         for (Animal animal : animalsList) {
             if (animal.getName().equals(name)) {
                 animalsList.remove(index);
@@ -69,16 +69,14 @@ public class FileHandler implements Importer {
             }
             index++;
         }
-    
+
         List<String> animalStrings = new ArrayList<>();
         for (Animal a : animalsList) {
             animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
         }
-    
+
         Files.write(Paths.get(path), animalStrings);
     }
-    
-    
 
     // PROMO CODE SECTION
     public List<PromoCode> loadPromoCodes(String path) throws IOException {
@@ -149,6 +147,96 @@ public class FileHandler implements Importer {
 
     }
 
+    // ADMIN SECTION
+    public List<Admin> loadAdmins(String path) throws IOException {
 
-   
+        Path p = Paths.get(path);
+
+        List<String> adminsString = Files.readAllLines(p);
+        List<Admin> admins = new ArrayList<>();
+
+        for (String admin : adminsString) {
+            String[] pieces = admin.split(",");
+            String user = pieces[0];
+            String password = pieces[1];
+            admins.add(new Admin(user, password));
+        }
+
+        return admins;
+    }
+
+    public void writeAdmin(String user, String password, String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+        adminsList.add(new Admin(user, password));
+
+        List<String> adminsStrings = new ArrayList<>();
+        for (Admin admin : adminsList) {
+            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+        }
+
+        Files.write(Paths.get(path), adminsStrings);
+    }
+
+    public void updateAdmin(String user, String newPassword, String path) throws IOException {
+        deleteAdmin(user, path);
+        writeAdmin(user, newPassword, path);
+    }
+
+    public void deleteAdmin(String user, String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        int index = 0;
+
+        for (Admin admin : adminsList) {
+            String oldUser = admin.getUser();
+            if (oldUser.equals(user)) {
+                adminsList.remove(index);
+                break;
+            }
+            index++;
+        }
+
+        List<String> adminsStrings = new ArrayList<>();
+        for (Admin admin : adminsList) {
+            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+        }
+
+        Files.write(Paths.get(path), adminsStrings);
+    }
+
+    public void prntAdmin(String path) throws IOException {
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        for (int i = 0; i < adminsList.size(); i++) {
+            System.out.println(adminsList.get(i));
+        }
+
+    }
+
+    public boolean matchingAdmin(String username, String password, String path) throws IOException {
+        // get admin list
+        List<Admin> adminsList = new ArrayList<>();
+        adminsList = loadAdmins(path);
+
+        boolean match = false;
+
+        // for every admin in the admin list
+        for (Admin admin : adminsList) {
+            // set variables from list
+            String usernameFromList = admin.getUser();
+            String passwordFromList = admin.getPassword();
+
+            // if match with admin list true
+            if (usernameFromList.equals(username) && passwordFromList.equals(password)) {
+                match = true;
+            }
+        }
+
+        // return result
+        return match;
+    }
+
 }

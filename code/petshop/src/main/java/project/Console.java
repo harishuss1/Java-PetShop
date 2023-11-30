@@ -38,7 +38,7 @@ public abstract class Console {
                 adminCSL.displayMainMenu();
                 break;
             case 2:
-                spacing(); 
+                spacing();
                 InventoryManager inventoryManager = new InventoryManager();
                 UserConsole userCSL = new UserConsole(inventoryManager);
                 userCSL.loginSystem();
@@ -105,6 +105,6 @@ public abstract class Console {
 
     abstract void displayMainMenu() throws IOException;
 
-    abstract void loginSystem();
+    abstract void loginSystem() throws IOException;
 
 }
