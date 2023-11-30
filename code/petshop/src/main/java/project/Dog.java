@@ -19,6 +19,6 @@ public class Dog extends Animal {
 
     @Override
     public String toString() {
-        return super.toString() + "\nBreed: " + breed;
+        return super.toString() + "Breed: " + breed+"\n";
     }
 }

@@ -31,9 +31,21 @@ public class FileHandler implements Importer {
         String species = columns[1].trim();
         int age = Integer.parseInt(columns[2].trim());
         double price = Double.parseDouble(columns[3].trim());
-
-        return new Animal(name, species, age, price);
-    }
+        String additionalInfo = columns[4].trim();
+     
+        switch (species) {
+            case "Dog":
+                return new Dog(name, species, age, price, additionalInfo);
+            case "Cat":
+                return new Cat(name, species, age, price, Boolean.parseBoolean(additionalInfo));
+            case "Fish":
+                return new Fish(name, species, age, price, additionalInfo);
+            case "Parrot":
+                return new Parrot(name, species, age, price, additionalInfo);
+            default:
+                return new Animal(name, species, age, price);
+        }
+     }
 
     public void printAnimals(String path) throws IOException {
         List<Animal> animalsList = loadAnimals();
@@ -47,21 +59,36 @@ public class FileHandler implements Importer {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
         animalsList.add(animal);
-
+     
         List<String> animalStrings = new ArrayList<>();
         for (Animal a : animalsList) {
-            animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
+            if (a instanceof Dog) {
+                Dog dog = (Dog) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + dog.getBreed());
+            } else if (a instanceof Cat) {
+                Cat cat = (Cat) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + cat.hasClaws());
+            } else if (a instanceof Fish) {
+                Fish fish = (Fish) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + fish.getColor());
+            } else if (a instanceof Parrot) {
+                Parrot parrot = (Parrot) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + parrot.getFeatherColor());
+            } else {
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
+            }
         }
-
+     
         Files.write(Paths.get(path), animalStrings);
-    }
+     }
+     
 
-    public void deleteAnimal(String name, String path) throws IOException {
+     public void deleteAnimal(String name, String path) throws IOException {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
-
+     
         int index = 0;
-
+     
         for (Animal animal : animalsList) {
             if (animal.getName().equals(name)) {
                 animalsList.remove(index);
@@ -69,14 +96,28 @@ public class FileHandler implements Importer {
             }
             index++;
         }
-
+     
         List<String> animalStrings = new ArrayList<>();
         for (Animal a : animalsList) {
-            animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
+            if (a instanceof Dog) {
+                Dog dog = (Dog) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + dog.getBreed());
+            } else if (a instanceof Cat) {
+                Cat cat = (Cat) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + cat.hasClaws());
+            } else if (a instanceof Fish) {
+                Fish fish = (Fish) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + fish.getColor());
+            } else if (a instanceof Parrot) {
+                Parrot parrot = (Parrot) a;
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice() + "," + parrot.getFeatherColor());
+            } else {
+                animalStrings.add(a.getName() + "," + a.getSpecies() + "," + a.getAge() + "," + a.getPrice());
+            }
         }
-
+     
         Files.write(Paths.get(path), animalStrings);
-    }
+     }
 
     // PROMO CODE SECTION
     public List<PromoCode> loadPromoCodes(String path) throws IOException {
