@@ -10,7 +10,7 @@ public class User {
 
     public User(String username, List<Animal> cart, double promoCode) {
         this.username = username;
-        this.cart = cart;
+        this.cart =  new ArrayList<>(); // Initialize the cart if null
         this.promoCode = promoCode;
     }
 
@@ -42,6 +42,7 @@ public class User {
         cart.add(animal);
         System.out.println("Added " + animal.getName() + " to your shopping cart.");
     }
+    
 
     public void viewCart() {
         System.out.println("Your Shopping Cart:");

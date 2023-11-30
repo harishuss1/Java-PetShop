@@ -176,28 +176,73 @@ public class AdminConsole extends Console {
         }
     }
 
-    private Animal getAnimalDetailsFromUser() {
+    private Animal getAnimalDetailsFromUser(String species) {
+        scanner.nextLine();
         System.out.println("Enter new name:");
         String name = scanner.nextLine();
-        System.out.println("Enter new species:");
-        String species = scanner.nextLine();
         System.out.println("Enter new age:");
         int age = scanner.nextInt();
         System.out.println("Enter new price:");
         double price = scanner.nextDouble();
         scanner.nextLine();
-
-        return new Animal(name, species, age, price);
-    }
+      
+        if (species.equals("Dog")) {
+            System.out.println("Enter new breed:");
+            String breed = scanner.nextLine();
+            return new Dog(name, species, age, price, breed);
+        } else if (species.equals("Cat")) {
+            System.out.println("Does the cat have claws? (true/false)");
+            boolean hasClaws = scanner.nextBoolean();
+            return new Cat(name, species, age, price, hasClaws);
+        } else if (species.equals("Fish")) {
+            System.out.println("Enter new color:");
+            String color = scanner.nextLine();
+            return new Fish(name, species, age, price, color);
+        } else if (species.equals("Parrot")) {
+            System.out.println("Enter new feather color:");
+            String featherColor = scanner.nextLine();
+            return new Parrot(name, species, age, price, featherColor);
+        } else {
+            return new Animal(name, species, age, price);
+        }
+      }
+      
 
     private void addAnimal() throws IOException {
-        Animal addedAnimal = getAnimalDetailsFromUser();
+        System.out.println("Select the type of animal to add:");
+        System.out.println("1. Dog");
+        System.out.println("2. Cat");
+        System.out.println("3. Fish");
+        System.out.println("4. Parrot");
+        int choice = scanner.nextInt();
 
+        String type;
+        switch (choice) {
+            case 1:
+                type = "Dog";
+                break;
+            case 2:
+                type = "Cat";
+                break;
+            case 3:
+                type = "Fish";
+                break;
+            case 4:
+                type = "Parrot";
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                addAnimal();
+                return;
+        }
+ 
+        Animal addedAnimal = getAnimalDetailsFromUser(type);
+ 
         inventoryManager.addAnimal(addedAnimal);
         fileHandler.writeAnimal(addedAnimal, animalPath);
-
+ 
         System.out.println("Animal added successfully!");
-
+ 
         spacing();
         ManageInventory();
     }
@@ -206,17 +251,28 @@ public class AdminConsole extends Console {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
-
-        Animal newAnimal = getAnimalDetailsFromUser(); // Gather updated information
+      
+        Animal oldAnimal = inventoryManager.getAnimalByName(oldName);
+      
+        if (oldAnimal == null) {
+            System.out.println("Animal not found. Please try again.");
+            updateAnimal();
+            return;
+        }
+      
+        String species = oldAnimal.getSpecies();
+      
+        Animal newAnimal = getAnimalDetailsFromUser(species); // Gather updated information
         inventoryManager.updateAnimal(oldName, newAnimal);
         fileHandler.deleteAnimal(oldName, animalPath);
         fileHandler.writeAnimal(newAnimal, animalPath);
-
+      
         System.out.println("Animal updated successfully!");
-
+      
         spacing();
         ManageInventory();
-    }
+      }
+     
 
     private void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");

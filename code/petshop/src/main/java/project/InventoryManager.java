@@ -64,7 +64,7 @@ public class InventoryManager {
    
    public Animal getAnimalByName(String name) {
     for (Animal animal : animals) {
-        if (animal.getName().equals(name)) {
+        if (animal.getName().equalsIgnoreCase(name)) {
             return animal;
         }
     }

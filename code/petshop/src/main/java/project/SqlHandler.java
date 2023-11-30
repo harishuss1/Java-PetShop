@@ -10,8 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.Console;
+import java.io.IOException;
 
-public class SqlHandler  {
+public class SqlHandler implements Importer {
 
     private String url;
     private String username;
@@ -91,5 +92,95 @@ public class SqlHandler  {
                 preparedStatement.executeUpdate();
             }
         }
+    }
+
+    @Override
+    public List<PromoCode> loadPromoCodes(String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadPromoCodes'");
+    }
+
+    @Override
+    public void writePromoCode(String code, double value, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'writePromoCode'");
+    }
+
+    @Override
+    public void updatePromoCode(String code, double newValue, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updatePromoCode'");
+    }
+
+    @Override
+    public void deletePromoCode(String code, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deletePromoCode'");
+    }
+
+    @Override
+    public void prntPromo(String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'prntPromo'");
+    }
+
+    @Override
+    public List<Admin> loadAdmins(String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'loadAdmins'");
+    }
+
+    @Override
+    public void writeAdmin(String user, String password, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'writeAdmin'");
+    }
+
+    @Override
+    public void updateAdmin(String user, String newPassword, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateAdmin'");
+    }
+
+    @Override
+    public void deleteAdmin(String user, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAdmin'");
+    }
+
+    @Override
+    public void prntAdmin(String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'prntAdmin'");
+    }
+
+    @Override
+    public boolean matchingAdmin(String username, String password, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'matchingAdmin'");
+    }
+
+    @Override
+    public Animal createAnimal(String[] columns) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'createAnimal'");
+    }
+
+    @Override
+    public void printAnimals(String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'printAnimals'");
+    }
+
+    @Override
+    public void writeAnimal(Animal animal, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'writeAnimal'");
+    }
+
+    @Override
+    public void deleteAnimal(String name, String path) throws IOException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAnimal'");
     }
 }
