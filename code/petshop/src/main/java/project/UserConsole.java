@@ -38,8 +38,7 @@ public class UserConsole extends Console {
         try {
             inventoryManager.loadAnimals(fileHandler.loadAnimals());
         } catch (IOException e) {
-            
-           System.out.println("Thers an issue with loading the animals");
+            System.out.println("There's an issue with loading the animals");
         }
         switch (choice) {
             case 1:
@@ -101,20 +100,23 @@ public class UserConsole extends Console {
     }
 
     private void viewCart() {
-        System.out.println("Viewing Shopping Cart:");
+        System.out.println("Viewing Cart:");
         user.viewCart();
         spacing();
         displayMainMenu();
     }
+    
 
     private void addToCart() {
         System.out.println("Adding to Shopping Cart:");
+        scanner.nextLine();  // Consume the newline character
+    
         System.out.println("Enter the name of the animal to add to your cart:");
         String animalName = scanner.nextLine();
-
+    
         // Find the animal in the inventory by name
         Animal selectedAnimal = inventoryManager.getAnimalByName(animalName);
-
+    
         if (selectedAnimal != null) {
             // Add the selected animal to the user's cart
             user.addToCart(selectedAnimal);
@@ -122,8 +124,11 @@ public class UserConsole extends Console {
         } else {
             System.out.println("Animal not found in inventory.");
         }
-
+    
         spacing();
         displayMainMenu();
     }
+    
+
+    
 }

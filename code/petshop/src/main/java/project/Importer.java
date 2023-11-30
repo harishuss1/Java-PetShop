@@ -8,6 +8,14 @@ public interface Importer {
     // ANIMAL
     List<Animal> loadAnimals() throws Exception;
 
+    Animal createAnimal(String[] columns);
+
+    void printAnimals(String path) throws IOException;
+
+    void writeAnimal(Animal animal, String path) throws IOException;
+
+    void deleteAnimal(String name, String path) throws IOException;
+
     // PROMOCODE
     List<PromoCode> loadPromoCodes(String path) throws IOException;
 
@@ -21,4 +29,15 @@ public interface Importer {
 
     // ADMIN
 
-}
+    List<Admin> loadAdmins(String path) throws IOException;
+
+    void writeAdmin(String user, String password, String path) throws IOException;
+
+    void updateAdmin(String user, String newPassword, String path) throws IOException;
+
+    void deleteAdmin(String user, String path) throws IOException;
+    
+    void prntAdmin(String path) throws IOException ;
+
+    boolean matchingAdmin(String username, String password, String path) throws IOException;
+} 
