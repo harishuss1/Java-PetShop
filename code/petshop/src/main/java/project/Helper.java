@@ -131,7 +131,6 @@ public class Helper {
     }
 
     public void viewAllAnimals() throws IOException {
-        // inventoryManager.loadAnimals(fileHandler.loadAnimals());
         inventoryManager.viewAllAnimals();
     }
 
