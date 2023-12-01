@@ -2,10 +2,9 @@ package project;
 
 import java.io.IOException;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import static project.Console.*;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Helper {
 
@@ -15,34 +14,36 @@ public class Helper {
     String animalPath = "code/petshop/src/main/resources/animals.csv";
     FileHandler fileHandler = new FileHandler();
     InventoryManager inventoryManager = new InventoryManager();
-
+    Validation valid = new Validation();
     User user = new User(null, null, 0);
 
     public Animal getAnimalDetailsFromUser(String species) {
-        scanner.nextLine();
-        System.out.println("Enter new name:");
-        String name = scanner.nextLine();
-        System.out.println("Enter new age:");
-        int age = scanner.nextInt();
-        System.out.println("Enter new price:");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
+        String name = valid.getStringInput("Enter new name:");
+
+        if (inventoryManager.animalExists(name)) {
+            System.out.println("An animal with the same name already exists. Please choose a different name.");
+            return getAnimalDetailsFromUser(species);
+        }
+
+        int age = valid.getPositiveInteger("Enter new age:");
+        double price = valid.getPositiveDouble("Enter new price:");
+      
 
         if (species.equals("Dog")) {
-            System.out.println("Enter new breed:");
-            String breed = scanner.nextLine();
+            // System.out.println("Enter new breed:");
+            String breed = valid.getStringInput("Enter new breed:");
             return new Dog(name, species, age, price, breed);
         } else if (species.equals("Cat")) {
-            System.out.println("Does the cat have claws? (true/false)");
-            boolean hasClaws = scanner.nextBoolean();
+            // System.out.println("Does the cat have claws? (true/false)");xxxxxxxxxxxxxxx
+            boolean hasClaws = valid.getValidBoolean("Does the cat have claws? (true/false)");
             return new Cat(name, species, age, price, hasClaws);
         } else if (species.equals("Fish")) {
-            System.out.println("Enter new color:");
-            String color = scanner.nextLine();
+            // System.out.println("Enter new color:");
+            String color = valid.getStringInput("Enter new color:");
             return new Fish(name, species, age, price, color);
         } else if (species.equals("Parrot")) {
-            System.out.println("Enter new feather color:");
-            String featherColor = scanner.nextLine();
+            // System.out.println("Enter new feather color:");
+            String featherColor = valid.getStringInput("Enter new feather color:");
             return new Parrot(name, species, age, price, featherColor);
         } else {
             return new Animal(name, species, age, price);
@@ -79,6 +80,12 @@ public class Helper {
 
         Animal addedAnimal = getAnimalDetailsFromUser(type);
 
+        // if (inventoryManager.animalExists(addedAnimal.getName())) {
+        //     System.out.println("An animal with the same name already exists. Please choose a different name.");
+        //     addAnimal(); 
+        //     return;
+        // }
+
         inventoryManager.addAnimal(addedAnimal);
         fileHandler.writeAnimal(addedAnimal, animalPath);
 
@@ -92,27 +99,35 @@ public class Helper {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
-
+    
         Animal oldAnimal = inventoryManager.getAnimalByName(oldName);
-
+    
         if (oldAnimal == null) {
             System.out.println("Animal not found. Please try again.");
             updateAnimal();
             return;
         }
-
+    
         String species = oldAnimal.getSpecies();
-
-        Animal newAnimal = getAnimalDetailsFromUser(species); // Gather updated information
+    
+        Animal newAnimal = getAnimalDetailsFromUser(species); 
+    
+        // if (inventoryManager.animalExists(newAnimal.getName()) && !newAnimal.getName().equalsIgnoreCase(oldName)) {
+        //     System.out.println("An animal with the new name already exists. Please choose a different name.");
+        //     updateAnimal(); 
+        //     return;
+        // }
+    
         inventoryManager.updateAnimal(oldName, newAnimal);
         fileHandler.deleteAnimal(oldName, animalPath);
         fileHandler.writeAnimal(newAnimal, animalPath);
-
+    
         System.out.println("Animal updated successfully!");
-
+    
         spacing();
         // ManageInventory();
     }
+    
 
     public void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");
@@ -132,6 +147,10 @@ public class Helper {
         // ManageInventory();
     }
 
+    public void viewAllAnimals() throws IOException {
+        inventoryManager.viewAllAnimals();
+    }
+
     public void removeCartAnimal(User user) throws IOException {
         List<Animal> cartList = user.getCart();
 
@@ -140,9 +159,6 @@ public class Helper {
         }
     }
 
-    public void viewAllAnimals() throws IOException {
-        inventoryManager.viewAllAnimals();
-    }
 
     public void addPromoCode() throws IOException {
         System.out.println("New code: ");

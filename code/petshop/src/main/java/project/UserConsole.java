@@ -79,12 +79,6 @@ public class UserConsole extends Console {
         }
     }
 
-    private void viewAnimals() {
-        System.out.println("Viewing Animals:");
-        inventoryManager.viewAllAnimals();
-        spacing();
-        displayMainMenu();
-    }
 
     private void searchInventory() throws IOException {
         System.out.println("Searching for inventory:");
