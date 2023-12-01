@@ -150,6 +150,7 @@ public class UserConsole extends Console {
             System.exit(1);
         } else {
             System.out.println("Your cart is empty");
+            spacing();
             displayMainMenu();
         }
     }
