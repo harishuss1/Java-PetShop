@@ -69,8 +69,6 @@ public class AdminConsole extends Console {
         System.out.println("4. View Animals");
         System.out.println("5. Return to Menu");
 
-        // inventoryManager.loadAnimals(fileHandler.loadAnimals());
-
         int choice = getUserChoice();
         switch (choice) {
             case 1:
@@ -91,7 +89,6 @@ public class AdminConsole extends Console {
                 break;
             case 5:
                 spacing();
-                displayMainMenu();
                 break;
             default:
                 spacing();
