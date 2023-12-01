@@ -13,26 +13,24 @@ public class Helper {
     String animalPath = "code/petshop/src/main/resources/animals.csv";
     FileHandler fileHandler = new FileHandler();
     InventoryManager inventoryManager = new InventoryManager();
-
+    Validation valid = new Validation();
     User user = new User(null, null, 0);
 
     public Animal getAnimalDetailsFromUser(String species) {
         scanner.nextLine();
         System.out.println("Enter new name:");
         String name = scanner.nextLine();
-        System.out.println("Enter new age:");
-        int age = scanner.nextInt();
-        System.out.println("Enter new price:");
-        double price = scanner.nextDouble();
-        scanner.nextLine();
+        int age = valid.getPositiveInteger("Enter new age:");
+        double price = valid.getPositiveDouble("Enter new price:");
+      
 
         if (species.equals("Dog")) {
             System.out.println("Enter new breed:");
             String breed = scanner.nextLine();
             return new Dog(name, species, age, price, breed);
         } else if (species.equals("Cat")) {
-            System.out.println("Does the cat have claws? (true/false)");
-            boolean hasClaws = scanner.nextBoolean();
+            // System.out.println("Does the cat have claws? (true/false)");xxxxxxxxxxxxxxx
+            boolean hasClaws = valid.getValidBoolean("Does the cat have claws? (true/false)");
             return new Cat(name, species, age, price, hasClaws);
         } else if (species.equals("Fish")) {
             System.out.println("Enter new color:");
