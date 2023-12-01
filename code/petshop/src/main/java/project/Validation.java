@@ -74,8 +74,16 @@ public class Validation {
 
 
     //Adding this to fix the line skip When asking for a name when adding or updating animal
-    public  String getStringInput(String prompt) {
-        System.out.println(prompt);
-        return scanner.nextLine();
+    public String getStringInput(String prompt) {
+        String input;
+        do {
+            System.out.print(prompt + " ");
+            input = scanner.nextLine().trim(); 
+            if (input.isEmpty()) {
+                System.out.println("Input cannot be empty. Please enter a valid value.");
+            }
+        } while (input.isEmpty());
+    
+        return input;
     }
 }

@@ -28,21 +28,24 @@ public class Helper {
         int age = valid.getPositiveInteger("Enter new age:");
         double price = valid.getPositiveDouble("Enter new price:");
       
+        scanner.nextLine();
 
         if (species.equals("Dog")) {
             // System.out.println("Enter new breed:");
             String breed = valid.getStringInput("Enter new breed:");
             return new Dog(name, species, age, price, breed);
         } else if (species.equals("Cat")) {
-            // System.out.println("Does the cat have claws? (true/false)");xxxxxxxxxxxxxxx
+            // System.out.println("Does the cat have claws? (true/false)");
             boolean hasClaws = valid.getValidBoolean("Does the cat have claws? (true/false)");
             return new Cat(name, species, age, price, hasClaws);
         } else if (species.equals("Fish")) {
             // System.out.println("Enter new color:");
+            
             String color = valid.getStringInput("Enter new color:");
             return new Fish(name, species, age, price, color);
         } else if (species.equals("Parrot")) {
             // System.out.println("Enter new feather color:");
+            
             String featherColor = valid.getStringInput("Enter new feather color:");
             return new Parrot(name, species, age, price, featherColor);
         } else {
@@ -57,6 +60,8 @@ public class Helper {
         System.out.println("3. Fish");
         System.out.println("4. Parrot");
         int choice = scanner.nextInt();
+
+        // scanner.nextLine();
 
         String type;
         switch (choice) {
@@ -80,11 +85,6 @@ public class Helper {
 
         Animal addedAnimal = getAnimalDetailsFromUser(type);
 
-        // if (inventoryManager.animalExists(addedAnimal.getName())) {
-        //     System.out.println("An animal with the same name already exists. Please choose a different name.");
-        //     addAnimal(); 
-        //     return;
-        // }
 
         inventoryManager.addAnimal(addedAnimal);
         fileHandler.writeAnimal(addedAnimal, animalPath);

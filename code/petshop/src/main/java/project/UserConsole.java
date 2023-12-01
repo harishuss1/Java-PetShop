@@ -151,16 +151,14 @@ public class UserConsole extends Console {
 
     private void addToCart() throws IOException {
         System.out.println("Adding to Shopping Cart:");
-        scanner.nextLine(); // Consume the newline character
+        scanner.nextLine(); 
 
         System.out.println("Enter the name of the animal to add to your cart:");
         String animalName = scanner.nextLine();
 
-        // Find the animal in the inventory by name
         Animal selectedAnimal = inventoryManager.getAnimalByName(animalName);
 
         if (selectedAnimal != null) {
-            // Add the selected animal to the user's cart
             user.addToCart(selectedAnimal);
             System.out.println(animalName + " added to your cart!");
         } else {
