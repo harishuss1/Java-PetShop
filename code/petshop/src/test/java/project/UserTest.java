@@ -37,7 +37,7 @@ public class UserTest {
     @Test
     public void testGetCart() {
         List<Animal> cart = new ArrayList<>();
-        Animal dog = new Mammal("Cupcake", "dog", 3, 100.0);
+        Animal dog = new Dog("Cupcake", "dog", 3, 100.0, "Pitbull");
         cart.add(dog);
         User user = new User("tester", cart, 10.0);
 
@@ -52,13 +52,13 @@ public class UserTest {
     @Test
     public void testSetCart() {
         List<Animal> cart = new ArrayList<>();
-        Animal dog = new Mammal("Cupcake", "Dog", 3, 100.0);
+        Animal dog = new Dog("Cupcake", "Dog", 3, 100.0, "Pitbull");
         cart.add(dog);
 
         User user = new User("tester", cart, 10.0);
 
         List<Animal> newCart = new ArrayList<>();
-        Animal cat = new Mammal("Ice spice", "Cat", 2, 150.0);
+        Animal cat = new Cat("Ice spice", "Cat", 2, 150.0, true);
         newCart.add(cat);
 
         user.setCart(newCart);
@@ -70,18 +70,4 @@ public class UserTest {
         assertNotEquals(cart, user.getCart());
     }
 
-    // @Test
-    // public void testAddToCart(){
-    // List<Animal> cart = new ArrayList<>();
-    // Animal dog = new Mammal("Cupcake", "dog", 3, 100.0);
-    // cart.add(dog);
-    // User user = new User("tester", cart, 10.0);
-
-    // Animal cat = new Mammal("Ice spice", "Cat", 2, 150.0);
-    // cart.add(cat);
-
-    // cart.addToCart(cart);
-
-    // assertEquals(cart, user.getCart());
-    // }
 }

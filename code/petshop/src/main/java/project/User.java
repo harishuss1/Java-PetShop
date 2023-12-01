@@ -10,7 +10,7 @@ public class User {
 
     public User(String username, List<Animal> cart, double promoCode) {
         this.username = username;
-        this.cart =  new ArrayList<>(); // Initialize the cart if null
+        this.cart = new ArrayList<>(); // Initialize the cart if null
         this.promoCode = promoCode;
     }
 
@@ -42,7 +42,6 @@ public class User {
         cart.add(animal);
         System.out.println("Added " + animal.getName() + " to your shopping cart.");
     }
-    
 
     public void viewCart() {
         System.out.println("Your Shopping Cart:");
@@ -52,7 +51,7 @@ public class User {
         System.out.println("Total Price: $" + calculateTotalPrice());
     }
 
-    private double calculateTotalPrice() {
+    public double calculateTotalPrice() {
         double totalPrice = 0;
         for (Animal animal : cart) {
             totalPrice += animal.getPrice();
