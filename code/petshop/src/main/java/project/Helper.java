@@ -20,6 +20,12 @@ public class Helper {
         scanner.nextLine();
         System.out.println("Enter new name:");
         String name = scanner.nextLine();
+
+        if (inventoryManager.animalExists(name)) {
+            System.out.println("An animal with the same name already exists. Please choose a different name.");
+            return getAnimalDetailsFromUser(species);
+        }
+
         int age = valid.getPositiveInteger("Enter new age:");
         double price = valid.getPositiveDouble("Enter new price:");
       
@@ -75,6 +81,12 @@ public class Helper {
 
         Animal addedAnimal = getAnimalDetailsFromUser(type);
 
+        // if (inventoryManager.animalExists(addedAnimal.getName())) {
+        //     System.out.println("An animal with the same name already exists. Please choose a different name.");
+        //     addAnimal(); 
+        //     return;
+        // }
+
         inventoryManager.addAnimal(addedAnimal);
         fileHandler.writeAnimal(addedAnimal, animalPath);
 
@@ -88,27 +100,35 @@ public class Helper {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
-
+    
         Animal oldAnimal = inventoryManager.getAnimalByName(oldName);
-
+    
         if (oldAnimal == null) {
             System.out.println("Animal not found. Please try again.");
             updateAnimal();
             return;
         }
-
+    
         String species = oldAnimal.getSpecies();
-
-        Animal newAnimal = getAnimalDetailsFromUser(species); // Gather updated information
+    
+        Animal newAnimal = getAnimalDetailsFromUser(species); 
+    
+        // if (inventoryManager.animalExists(newAnimal.getName()) && !newAnimal.getName().equalsIgnoreCase(oldName)) {
+        //     System.out.println("An animal with the new name already exists. Please choose a different name.");
+        //     updateAnimal(); 
+        //     return;
+        // }
+    
         inventoryManager.updateAnimal(oldName, newAnimal);
         fileHandler.deleteAnimal(oldName, animalPath);
         fileHandler.writeAnimal(newAnimal, animalPath);
-
+    
         System.out.println("Animal updated successfully!");
-
+    
         spacing();
         // ManageInventory();
     }
+    
 
     public void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");

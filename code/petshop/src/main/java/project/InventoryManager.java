@@ -86,4 +86,14 @@ public class InventoryManager {
            }
        }
    }
+
+   public boolean animalExists(String name) {
+    for (Animal animal : animals) {
+        if (animal.getName().equalsIgnoreCase(name)) {
+            return true; 
+        }
+    }
+    return false; 
+}
+
 }
