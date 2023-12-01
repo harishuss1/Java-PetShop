@@ -21,11 +21,12 @@ public class UserConsole extends Console {
         String username = scanner.nextLine();
         user.setUsername(username);
         spacing();
+        System.out.println("Welcome to the Application, " + user.getUsername() + "!");
     }
 
     @Override
     public void displayMainMenu() throws IOException {
-        System.out.println("Welcome to the Application, " + user.getUsername() + "!");
+        System.out.println("Main menu:");
         System.out.println("1. View Our Animals");
         System.out.println("2. Search for inventory");
         System.out.println("3. Apply Promo Code");
@@ -46,6 +47,7 @@ public class UserConsole extends Console {
                 } catch (IOException e) {
                     System.out.println("There is an issue viewing Animals");
                 }
+                spacing();
                 displayMainMenu();
                 break;
             case 2:

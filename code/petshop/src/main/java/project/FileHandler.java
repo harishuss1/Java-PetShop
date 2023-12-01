@@ -203,11 +203,9 @@ public class FileHandler implements Importer {
         String userInput = input;
         double value = 0;
 
-        System.out.println(userInput);
         // for every promo in the promo list
         for (PromoCode promo : promoList) {
             // if match with promo list true
-            System.out.println(promo.getCode());
             if (userInput.equals(promo.getCode())) {
                 value = promo.getValue();
             }
