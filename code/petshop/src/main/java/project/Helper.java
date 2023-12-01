@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import static project.Console.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Helper {
 
@@ -130,6 +132,14 @@ public class Helper {
         // ManageInventory();
     }
 
+    public void removeCartAnimal(User user) throws IOException {
+        List<Animal> cartList = user.getCart();
+
+        for (Animal pet : cartList) {
+            fileHandler.deleteAnimal(pet.getName(), animalPath);
+        }
+    }
+
     public void viewAllAnimals() throws IOException {
         inventoryManager.viewAllAnimals();
     }
@@ -199,6 +209,18 @@ public class Helper {
         }
 
         return discount;
+    }
+
+    public void matchingPromo(String inputPromo, User user) throws IOException {
+        // if username and password match success is true otherwise incorrect
+
+        if ((fileHandler.matchingPromoCode(inputPromo, promoPath) != 0)) {
+            double value = fileHandler.matchingPromoCode(inputPromo, promoPath);
+            user.setPromoCode(value);
+            System.out.println("Valid promo: " + value + "% OFF");
+        } else {
+            System.out.println("Invalid promo");
+        }
     }
 
     public void addAdmin() throws IOException {
