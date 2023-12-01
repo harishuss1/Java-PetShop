@@ -74,11 +74,34 @@ public class UserConsole extends Console {
 
     private void searchInventory() {
         System.out.println("Searching for inventory:");
-        System.out.println("Enter species to search:");
-        scanner.nextLine();
-        String species = scanner.nextLine();
+        System.out.println("Select the type of animal you are searching for:");
+        System.out.println("1. Dog");
+        System.out.println("2. Cat");
+        System.out.println("3. Fish");
+        System.out.println("4. Parrot");
+        int choice = scanner.nextInt();
+
+        String type;
+        switch (choice) {
+            case 1:
+                type = "Dog";
+                break;
+            case 2:
+                type = "Cat";
+                break;
+            case 3:
+                type = "Fish";
+                break;
+            case 4:
+                type = "Parrot";
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                searchInventory();
+                return;
+        }
         
-        inventoryManager.searchAnimals(species);
+        inventoryManager.searchAnimals(type);
         spacing();
         displayMainMenu();
     }
