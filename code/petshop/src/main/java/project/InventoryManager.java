@@ -1,20 +1,27 @@
 package project;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class InventoryManager {
 
    private List<Animal> animals;
+   private FileHandler fileHandler;
 
     public InventoryManager() {
-    this.animals = new ArrayList<>(); // Initialize the animals list
+    this.animals = new ArrayList<>();
+    this.fileHandler = new FileHandler();
+    loadAnimals();
     }
 
-    public void loadAnimals(List<Animal> animals) {
-        this.animals.clear();
-        this.animals.addAll(animals);
-    }
+    public void loadAnimals() {
+      try {
+          this.animals = fileHandler.loadAnimals();
+      } catch (IOException e) {
+          e.printStackTrace();
+      }
+  }
 
    public void addAnimal(Animal animal) {
        this.animals.add(animal);
@@ -40,12 +47,12 @@ public class InventoryManager {
    }
 
    public void viewAnimal(Animal animal) {
-       if (this.animals.contains(animal)) {
-           System.out.println(animal);
-       } else {
-           System.out.println("Animal not found in inventory.");
-       }
-   }
+    if (this.animals.contains(animal)) {
+        System.out.println(animal);
+    } else {
+        System.out.println("Animal not found in inventory.");
+    }
+}
 
    public void viewAllAnimals() {
     if (animals.isEmpty()) {

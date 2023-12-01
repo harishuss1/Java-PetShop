@@ -1,7 +1,6 @@
 package project;
 
 import java.io.IOException;
-import java.util.Scanner;
 
 public class UserConsole extends Console {
 
@@ -9,6 +8,7 @@ public class UserConsole extends Console {
     // private InventoryManager inventoryManager;
     FileHandler fileHandler = new FileHandler();
     InventoryManager inventoryManager = new InventoryManager();
+    Helper helper = new Helper();
 
     // Constructor to set the InventoryManager
     public UserConsole(InventoryManager inventoryManager) {
@@ -35,15 +35,18 @@ public class UserConsole extends Console {
         spacing();
 
         int choice = getUserChoice();
-        try {
-            inventoryManager.loadAnimals(fileHandler.loadAnimals());
-        } catch (IOException e) {
-            System.out.println("There's an issue with loading the animals");
-        }
+       
+            inventoryManager.loadAnimals();
+        
         switch (choice) {
             case 1:
-                viewAnimals();
-                break;
+            try {
+                helper.viewAllAnimals();
+            } catch (IOException e) {
+                    System.out.println("There is an issue viewing Animals");
+            }
+            displayMainMenu();
+            break;
             case 2:
                 searchInventory();
                 break;
@@ -65,20 +68,37 @@ public class UserConsole extends Console {
         }
     }
 
-    private void viewAnimals() {
-        System.out.println("Viewing Animals:");
-        inventoryManager.viewAllAnimals();
-        spacing();
-        displayMainMenu();
-    }
 
     private void searchInventory() {
         System.out.println("Searching for inventory:");
-        System.out.println("Enter species to search:");
-        scanner.nextLine();
-        String species = scanner.nextLine();
-        
-        inventoryManager.searchAnimals(species);
+        System.out.println("Select the type of animal you are searching for:");
+        System.out.println("1. Dog");
+        System.out.println("2. Cat");
+        System.out.println("3. Fish");
+        System.out.println("4. Parrot");
+        int choice = scanner.nextInt();
+
+        String type;
+        switch (choice) {
+            case 1:
+                type = "Dog";
+                break;
+            case 2:
+                type = "Cat";
+                break;
+            case 3:
+                type = "Fish";
+                break;
+            case 4:
+                type = "Parrot";
+                break;
+            default:
+                System.out.println("Invalid choice. Please try again.");
+                searchInventory();
+                return;
+        }
+
+        inventoryManager.searchAnimals(type);
         spacing();
         displayMainMenu();
     }
