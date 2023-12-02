@@ -12,18 +12,32 @@ import java.util.Scanner;
 import java.io.Console;
 import java.io.IOException;
 
+/**
+ * Manages interactions with a SQL database for animal-related operations.
+ */
 public class SqlHandler implements Importer {
 
     private String url;
     private String username;
     private String password;
-
+    /**
+     * Constructs a SqlHandler with the specified URL, username, and password for database connection.
+     *
+     * @param url      the URL for the database connection.
+     * @param username the username for authentication.
+     * @param password the password for authentication.
+     */
     // public SqlHandler(String url, String username, String password) {
     // this.url = url;
     // this.username = username;
     // this.password = password;
     // }
-
+    /**
+     * Loads a list of animals from the connected SQL database.
+     *
+     * @return a list of Animal objects.
+     * @throws SQLException if a database access error occurs.
+     */
     public List<Animal> loadAnimals() throws SQLException {
         List<Animal> animals = new ArrayList<>();
         Connection conn = null;
@@ -56,7 +70,12 @@ public class SqlHandler implements Importer {
 
         return animals;
     }
-
+    /**
+     * Adds an animal to the SQL database.
+     *
+     * @param animal the Animal object to be added.
+     * @throws SQLException if a database access error occurs.
+     */
     public void addAnimal(Animal animal) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "INSERT INTO animals (name, species, age, price) VALUES (?, ?, ?, ?)";
@@ -69,7 +88,13 @@ public class SqlHandler implements Importer {
             }
         }
     }
-
+    /**
+     * Updates an existing animal in the SQL database.
+     *
+     * @param oldAnimal the original Animal object.
+     * @param newAnimal the updated Animal object.
+     * @throws SQLException if a database access error occurs.
+     */
     public void updateAnimal(Animal oldAnimal, Animal newAnimal) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "UPDATE animals SET name=?, species=?, age=?, price=? WHERE name=?";
@@ -83,7 +108,12 @@ public class SqlHandler implements Importer {
             }
         }
     }
-
+     /**
+     * Deletes an animal from the SQL database.
+     *
+     * @param animal the Animal object to be deleted.
+     * @throws SQLException if a database access error occurs.
+     */
     public void deleteAnimal(Animal animal) throws SQLException {
         try (Connection connection = DriverManager.getConnection(url, username, password)) {
             String query = "DELETE FROM animals WHERE name=?";

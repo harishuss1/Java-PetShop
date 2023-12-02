@@ -9,7 +9,12 @@ import java.util.List;
 public class Validation {
 
     private static final Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Gets a positive integer from the user.
+     *
+     * @param prompt the prompt to display to the user.
+     * @return a positive integer entered by the user.
+     */
     public int getPositiveInteger(String prompt) {
         int input = 0;
         boolean isValidInput = false;
@@ -32,7 +37,12 @@ public class Validation {
 
         return input;
     }
-
+    /**
+     * Gets a positive double from the user.
+     *
+     * @param prompt the prompt to display to the user.
+     * @return a positive double entered by the user.
+     */
     public double getPositiveDouble(String prompt) {
         double input = 0.0;
         boolean isValidInput = false;
@@ -55,7 +65,12 @@ public class Validation {
 
         return input;
     }
-
+    /**
+     * Gets a valid boolean from the user.
+     *
+     * @param prompt the prompt to display to the user.
+     * @return a boolean value entered by the user.
+     */
     public boolean getValidBoolean(String prompt) {
         boolean isValidInput = false;
         boolean result = false;
@@ -75,8 +90,12 @@ public class Validation {
         return result;
     }
 
-    // Adding this to fix the line skip When asking for a name when adding or
-    // updating animal
+    /**
+     * Gets a non-empty string input from the user.
+     *
+     * @param prompt the prompt to display to the user.
+     * @return a non-empty string entered by the user.
+     */
     public String getStringInput(String prompt) {
         String input;
         do {
@@ -89,7 +108,14 @@ public class Validation {
 
         return input;
     }
-
+    /**
+     * Checks if the input matches any promo codes in the provided path.
+     *
+     * @param input the input to match.
+     * @param path  the path to the file containing promo codes.
+     * @return true if the input matches any promo code, false otherwise.
+     * @throws IOException if there is an issue reading input or output.
+     */
     public boolean doesItMatchPromo(String input, String path) throws IOException {
         FileHandler fileHandler = new FileHandler();
         // get promo list
@@ -108,7 +134,14 @@ public class Validation {
 
         return match;
     }
-
+    /**
+     * Checks if the input matches any admin usernames in the provided path.
+     *
+     * @param input the input to match.
+     * @param path  the path to the file containing admin usernames.
+     * @return true if the input matches any admin username, false otherwise.
+     * @throws IOException if there is an issue reading input or output.
+     */
     public boolean doesItMatchAdmin(String input, String path) throws IOException {
         FileHandler fileHandler = new FileHandler();
         // get admin list

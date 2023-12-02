@@ -4,10 +4,18 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
+/**
+ * The abstract Console class serves as the base class for both AdminConsole and UserConsole,
+ * providing common functionality for handling input, displaying menus, and greeting the user.
+ */
 public abstract class Console {
+    /**
+     * Scanner object for reading input from the user.
+     */
     final static Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Displays a greeting message when the application starts.
+     */
     public static void greet() {
         System.out.println(" __       __            __                                             \r\n" + //
                 "|  \\  _  |  \\          |  \\                                            \r\n" + //
@@ -20,7 +28,12 @@ public abstract class Console {
                 " \\$$      \\$$  \\$$$$$$$ \\$$  \\$$$$$$$  \\$$$$$$  \\$$  \\$$  \\$$  \\$$$$$$$");
         System.out.println();
     }
-
+    /**
+     * Displays the login menu for selecting whether to sign in as an admin, user, or exit the application.
+     * Calls the appropriate login and main menu methods based on the user's choice.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public static void displayLoginMenu() throws IOException {
         System.out.println("Sign in:");
         System.out.println("1. Admin");
@@ -54,7 +67,13 @@ public abstract class Console {
                 displayLoginMenu();
         }
     }
-
+/**
+     * Allows the user to choose the method to import animals, either through SQLHandler or FileHandler.
+     * Calls the appropriate method based on the user's choice.
+     *
+     * @throws IOException  if an I/O error occurs.
+     * @throws SQLException if a SQL-related error occurs.
+     */
     public static void chooseImportMethod() throws IOException, SQLException {
         System.out.println("Choose the method to import animals:");
         System.out.println("1. SQLHandler");
@@ -81,7 +100,11 @@ public abstract class Console {
                 chooseImportMethod();
         }
     }
-
+    /**
+     * Gets the user's choice as an integer.
+     *
+     * @return the user's choice as an integer.
+     */
     public static int getUserChoice() {
         int choice = 0;
         boolean isValidInput = false;
@@ -98,13 +121,23 @@ public abstract class Console {
         }
         return choice;
     }
-
+     /**
+     * Prints a line to separate sections and improve readability.
+     */
     public static void spacing() {
         System.out.println("===========================");
     }
-
+    /**
+     * Abstract method to be implemented by subclasses for displaying the main menu.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     abstract void displayMainMenu() throws IOException;
-
+    /**
+     * Abstract method to be implemented by subclasses for handling the login process.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     abstract void loginSystem() throws IOException;
 
 }

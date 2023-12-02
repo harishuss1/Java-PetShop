@@ -2,19 +2,28 @@ package project;
 
 import java.io.IOException;
 
+/**
+ * Represents a user interface console for interacting with the Pet Shop application.
+ */
 public class UserConsole extends Console {
 
     private User user = new User(null, null, 0);
-    // private InventoryManager inventoryManager;
     FileHandler fileHandler = new FileHandler();
     InventoryManager inventoryManager = new InventoryManager();
     Helper helper = new Helper();
 
-    // Constructor to set the InventoryManager
+    /**
+     * Constructs a UserConsole with a specified InventoryManager.
+     *
+     * @param inventoryManager the InventoryManager to be used by the console.
+     */
     public UserConsole(InventoryManager inventoryManager) {
         this.inventoryManager = inventoryManager;
     }
 
+    /**
+     * Prompts the user to log in and displays a welcome message.
+     */
     @Override
     public void loginSystem() {
         System.out.println("Username:");
@@ -24,6 +33,11 @@ public class UserConsole extends Console {
         System.out.println("Welcome to the Application, " + user.getUsername() + "!");
     }
 
+    /**
+     * Displays the main menu of the Pet Shop application and handles user choices.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     @Override
     public void displayMainMenu() throws IOException {
         System.out.println("Main menu:");
@@ -79,7 +93,11 @@ public class UserConsole extends Console {
         }
     }
 
-
+    /**
+     * Searches the inventory based on the user's selection of animal type.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     private void searchInventory() throws IOException {
         System.out.println("Searching for inventory:");
         System.out.println("Select the type of animal you are searching for:");
@@ -114,6 +132,11 @@ public class UserConsole extends Console {
         displayMainMenu();
     }
 
+    /**
+     * Applies a promo code based on user input.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     private void applyPromoCode() throws IOException {
         System.out.println("Applying Promo Code:");
         System.out.println("Enter promo code:");
@@ -128,6 +151,11 @@ public class UserConsole extends Console {
         displayMainMenu();
     }
 
+    /**
+     * Displays the contents of the user's shopping cart.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     private void viewCart() throws IOException {
         System.out.println("Viewing Cart:");
         user.viewCart();
@@ -135,6 +163,11 @@ public class UserConsole extends Console {
         displayMainMenu();
     }
 
+    /**
+     * Handles the checkout process, calculating the total price and displaying a thank you message.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     private void checkout() throws IOException {
         double finalPrice = user.calculateTotalPrice();
         if (finalPrice > 0) {
@@ -149,6 +182,11 @@ public class UserConsole extends Console {
         }
     }
 
+    /**
+     * Adds an animal to the user's shopping cart based on user input.
+     *
+     * @throws IOException if there is an issue reading input or output.
+     */
     private void addToCart() throws IOException {
         System.out.println("Adding to Shopping Cart:");
         scanner.nextLine(); 
@@ -168,5 +206,4 @@ public class UserConsole extends Console {
         spacing();
         displayMainMenu();
     }
-
 }
