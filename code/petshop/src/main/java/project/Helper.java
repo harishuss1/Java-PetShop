@@ -28,8 +28,6 @@ public class Helper {
         int age = valid.getPositiveInteger("Enter new age:");
         double price = valid.getPositiveDouble("Enter new price:");
 
-        scanner.nextLine();
-
         if (species.equals("Dog")) {
             // System.out.println("Enter new breed:");
             String breed = valid.getStringInput("Enter new breed:");
