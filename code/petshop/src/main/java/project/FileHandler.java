@@ -6,11 +6,20 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * The FileHandler class is responsible for handling file-related operations, including loading, creating, and
+ * manipulating data in files such as animal information, promo codes, and admin credentials.
+ */
 public class FileHandler implements Importer {
     Validation validation = new Validation();
 
     // ANIMAL SECTION
+    /**
+     * Loads a list of animals from a specified file path.
+     *
+     * @return a List of Animal objects loaded from the file.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public List<Animal> loadAnimals() throws IOException {
         String path = "code/petshop/src/main/resources/animals.csv";
         Path animalsPath = Paths.get(path);
@@ -26,7 +35,12 @@ public class FileHandler implements Importer {
 
         return animals;
     }
-
+    /**
+     * Creates an Animal object based on the columns provided.
+     *
+     * @param columns an array of String representing the columns of an animal's information.
+     * @return a new Animal object created from the columns.
+     */
     public Animal createAnimal(String[] columns) {
         String name = columns[0].trim();
         String species = columns[1].trim();
@@ -47,7 +61,12 @@ public class FileHandler implements Importer {
                 return new Animal(name, species, age, price);
         }
     }
-
+     /**
+     * Prints the list of animals loaded from a specified file path.
+     *
+     * @param path the file path from which to load animals.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public void printAnimals(String path) throws IOException {
         List<Animal> animalsList = loadAnimals();
 
@@ -55,7 +74,13 @@ public class FileHandler implements Importer {
             System.out.println(animalsList.get(i));
         }
     }
-
+    /**
+     * Writes an Animal object to a specified file path.
+     *
+     * @param animal the Animal object to be written to the file.
+     * @param path   the file path to which the animal will be written.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void writeAnimal(Animal animal, String path) throws IOException {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
@@ -86,7 +111,13 @@ public class FileHandler implements Importer {
 
         Files.write(Paths.get(path), animalStrings);
     }
-
+    /**
+     * Deletes an animal with the specified name from a specified file path.
+     *
+     * @param name the name of the animal to be deleted.
+     * @param path the file path from which the animal will be deleted.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void deleteAnimal(String name, String path) throws IOException {
         List<Animal> animalsList = new ArrayList<>();
         animalsList = loadAnimals();
@@ -128,6 +159,13 @@ public class FileHandler implements Importer {
     }
 
     // PROMO CODE SECTION
+     /**
+     * Loads a list of promo codes from a specified file path.
+     *
+     * @param path the file path from which to load promo codes.
+     * @return a List of PromoCode objects loaded from the file.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public List<PromoCode> loadPromoCodes(String path) throws IOException {
 
         Path p = Paths.get(path);
@@ -144,7 +182,14 @@ public class FileHandler implements Importer {
 
         return promoCodes;
     }
-
+    /**
+     * Writes a new promo code to a specified file path.
+     *
+     * @param code the promo code to be written to the file.
+     * @param value the value associated with the promo code.
+     * @param path the file path to which the promo code will be written.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void writePromoCode(String code, double value, String path) throws IOException {
         boolean match = validation.doesItMatchPromo(code, path);
         if (!(match)) {
@@ -164,7 +209,14 @@ public class FileHandler implements Importer {
             System.out.println("Promo code already exist");
         }
     }
-
+    /**
+     * Updates the value of an existing promo code in a specified file path.
+     *
+     * @param code the promo code to be updated.
+     * @param newValue the new value associated with the promo code.
+     * @param path the file path from which the promo code will be updated.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void updatePromoCode(String code, double newValue, String path) throws IOException {
         boolean match = validation.doesItMatchPromo(code, path);
         if (!(match)) {
@@ -175,7 +227,13 @@ public class FileHandler implements Importer {
             System.out.println("Promocode updated sucessfully!");
         }
     }
-
+    /**
+     * Deletes a promo code with the specified code from a specified file path.
+     *
+     * @param code the code of the promo code to be deleted.
+     * @param path the file path from which the promo code will be deleted.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void deletePromoCode(String code, String path) throws IOException {
         boolean match = validation.doesItMatchPromo(code, path);
         if (!(match)) {
@@ -204,7 +262,12 @@ public class FileHandler implements Importer {
             System.out.println("Promocode deleted sucessfully!");
         }
     }
-
+    /**
+     * Prints the list of promo codes loaded from a specified file path.
+     *
+     * @param path the file path from which to load promo codes.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public void prntPromo(String path) throws IOException {
         List<PromoCode> promoCodesList = new ArrayList<>();
         promoCodesList = loadPromoCodes(path);
@@ -217,7 +280,14 @@ public class FileHandler implements Importer {
             }
         }
     }
-
+    /**
+     * Checks if a user-inputted promo code matches any existing promo codes.
+     *
+     * @param input the user-inputted promo code.
+     * @param path the file path from which to load promo codes.
+     * @return the value associated with the matching promo code, or 0 if no match is found.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public double matchingPromoCode(String input, String path) throws IOException {
         // get promo list
         List<PromoCode> promoList = new ArrayList<>();
@@ -239,6 +309,13 @@ public class FileHandler implements Importer {
     }
 
     // ADMIN SECTION
+     /**
+     * Loads a list of admins from a specified file path.
+     *
+     * @param path the file path from which to load admins.
+     * @return a List of Admin objects loaded from the file.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public List<Admin> loadAdmins(String path) throws IOException {
 
         Path p = Paths.get(path);
@@ -255,7 +332,14 @@ public class FileHandler implements Importer {
 
         return admins;
     }
-
+    /**
+     * Writes a new admin to a specified file path.
+     *
+     * @param user the username of the new admin.
+     * @param password the password of the new admin.
+     * @param path the file path to which the admin will be written.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void writeAdmin(String user, String password, String path) throws IOException {
         boolean match = validation.doesItMatchAdmin(user, path);
         if (!(match)) {
@@ -274,7 +358,14 @@ public class FileHandler implements Importer {
             System.out.println("Admin already exist");
         }
     }
-
+    /**
+     * Updates the password of an existing admin in a specified file path.
+     *
+     * @param user the username of the admin to be updated.
+     * @param newPassword the new password of the admin.
+     * @param path the file path from which the admin will be updated.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void updateAdmin(String user, String newPassword, String path) throws IOException {
         boolean match = validation.doesItMatchAdmin(user, path);
         if (!(match)) {
@@ -285,7 +376,13 @@ public class FileHandler implements Importer {
             System.out.println("Admin updated sucessfully!");
         }
     }
-
+    /**
+     * Deletes an admin with the specified username from a specified file path.
+     *
+     * @param user the username of the admin to be deleted.
+     * @param path the file path from which the admin will be deleted.
+     * @throws IOException if an I/O error occurs while writing to the file.
+     */
     public void deleteAdmin(String user, String path) throws IOException {
         boolean match = validation.doesItMatchAdmin(user, path);
         if (!(match)) {
@@ -314,7 +411,12 @@ public class FileHandler implements Importer {
             System.out.println("Admin deleted sucessfully!");
         }
     }
-
+    /**
+     * Prints the list of admins loaded from a specified file path.
+     *
+     * @param path the file path from which to load admins.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public void prntAdmin(String path) throws IOException {
         List<Admin> adminsList = new ArrayList<>();
         adminsList = loadAdmins(path);
@@ -324,7 +426,15 @@ public class FileHandler implements Importer {
         }
 
     }
-
+    /**
+     * Checks if a user-inputted username and password match any existing admin credentials.
+     *
+     * @param username the username entered by the user.
+     * @param password the password entered by the user.
+     * @param path the file path from which to load admins.
+     * @return true if the entered username and password match any admin credentials, false otherwise.
+     * @throws IOException if an I/O error occurs while reading the file.
+     */
     public boolean matchingAdmin(String username, String password, String path) throws IOException {
         // get admin list
         List<Admin> adminsList = new ArrayList<>();

@@ -1,9 +1,13 @@
 package project;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ * The AdminConsole class represents the console interface for administrative tasks.
+ * It extends the Console class and provides methods for admin login and managing
+ * inventory, promo codes, and admins.
+ */
 public class AdminConsole extends Console {
     final static Scanner scanner = new Scanner(System.in);
     String promoPath = "code/petshop/src/main/resources/promo.csv";
@@ -15,13 +19,23 @@ public class AdminConsole extends Console {
 
     User user = new User(null, null, 0);
 
+    /**
+     * Overrides the loginSystem method from the Console class to provide admin login functionality.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     public void loginSystem() throws IOException {
         System.out.println("Admin login");
         helper.adminLogin();
         spacing();
     }
-
+    /**
+     * Overrides the displayMainMenu method from the Console class to display the main menu
+     * for administrative tasks.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     @Override
     public void displayMainMenu() throws IOException {
         System.out.println("Menu:");
@@ -60,7 +74,12 @@ public class AdminConsole extends Console {
                 break;
         }
     }
-
+    /**
+     * Provides functionality to manage the inventory, including adding, updating, removing,
+     * and viewing animals.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void ManageInventory() throws IOException {
         System.out.println("Managing Inventory:");
         System.out.println("1. Add an Animal");
@@ -97,7 +116,12 @@ public class AdminConsole extends Console {
                 break;
         }
     }
-
+    /**
+     * Provides functionality to manage promo codes, including adding, updating, removing,
+     * and viewing promo codes.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void ManagePromoCodes() throws IOException {
         System.out.println("Managing Promocode:");
         System.out.println("1. Add a Promocode");
@@ -135,7 +159,12 @@ public class AdminConsole extends Console {
                 break;
         }
     }
-
+/**
+     * Provides functionality to manage admins, including adding, updating, removing,
+     * and viewing admins.
+     *
+     * @throws IOException if an I/O error occurs.
+     */
     public void ManageAdmins() throws IOException {
         System.out.println("Managing Admins:");
         System.out.println("1. Add an admin");
