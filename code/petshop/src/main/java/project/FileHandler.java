@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileHandler implements Importer {
+    Validation validation = new Validation();
 
     // ANIMAL SECTION
     public List<Animal> loadAnimals() throws IOException {
@@ -145,54 +146,76 @@ public class FileHandler implements Importer {
     }
 
     public void writePromoCode(String code, double value, String path) throws IOException {
-        List<PromoCode> promoCodesList = new ArrayList<>();
-        promoCodesList = loadPromoCodes(path);
-        promoCodesList.add(new PromoCode(code, value));
+        boolean match = validation.doesItMatchPromo(code, path);
+        if (!(match)) {
+            List<PromoCode> promoCodesList = new ArrayList<>();
+            promoCodesList = loadPromoCodes(path);
+            promoCodesList.add(new PromoCode(code, value));
 
-        List<String> PromoCodeStrings = new ArrayList<>();
-        for (PromoCode promo : promoCodesList) {
-            PromoCodeStrings.add(promo.getCode() + "," + promo.getValue());
+            List<String> PromoCodeStrings = new ArrayList<>();
+            for (PromoCode promo : promoCodesList) {
+                PromoCodeStrings.add(promo.getCode() + "," + promo.getValue());
+            }
+
+            Files.write(Paths.get(path), PromoCodeStrings);
+            System.out.println("Promocode added sucessfully!");
+
+        } else {
+            System.out.println("Promo code already exist");
         }
-
-        Files.write(Paths.get(path), PromoCodeStrings);
     }
 
     public void updatePromoCode(String code, double newValue, String path) throws IOException {
-        deletePromoCode(code, path);
-        writePromoCode(code, newValue, path);
+        boolean match = validation.doesItMatchPromo(code, path);
+        if (!(match)) {
+            System.out.println("Promo code doesn't exist");
+        } else {
+            deletePromoCode(code, path);
+            writePromoCode(code, newValue, path);
+            System.out.println("Promocode updated sucessfully!");
+        }
     }
 
     public void deletePromoCode(String code, String path) throws IOException {
-        List<PromoCode> promoCodesList = new ArrayList<>();
-        promoCodesList = loadPromoCodes(path);
+        boolean match = validation.doesItMatchPromo(code, path);
+        if (!(match)) {
+            System.out.println("Promo code doesn't exist");
+        } else {
+            List<PromoCode> promoCodesList = new ArrayList<>();
+            promoCodesList = loadPromoCodes(path);
 
-        int index = 0;
+            int index = 0;
 
-        for (PromoCode promo : promoCodesList) {
-            String oldcode = promo.getCode();
-            if (oldcode.equals(code)) {
-                promoCodesList.remove(index);
-                break;
+            for (PromoCode promo : promoCodesList) {
+                String oldcode = promo.getCode();
+                if (oldcode.equals(code)) {
+                    promoCodesList.remove(index);
+                    break;
+                }
+                index++;
             }
-            index++;
-        }
 
-        List<String> PromoCodeStrings = new ArrayList<>();
-        for (PromoCode promo : promoCodesList) {
-            PromoCodeStrings.add(promo.getCode() + "," + promo.getValue());
-        }
+            List<String> PromoCodeStrings = new ArrayList<>();
+            for (PromoCode promo : promoCodesList) {
+                PromoCodeStrings.add(promo.getCode() + "," + promo.getValue());
+            }
 
-        Files.write(Paths.get(path), PromoCodeStrings);
+            Files.write(Paths.get(path), PromoCodeStrings);
+            System.out.println("Promocode deleted sucessfully!");
+        }
     }
 
     public void prntPromo(String path) throws IOException {
         List<PromoCode> promoCodesList = new ArrayList<>();
         promoCodesList = loadPromoCodes(path);
-
-        for (int i = 0; i < promoCodesList.size(); i++) {
-            System.out.println(promoCodesList.get(i));
+        int listSize = promoCodesList.size();
+        if (listSize == 0) {
+            System.out.println("No promo code");
+        } else {
+            for (int i = 0; i < listSize; i++) {
+                System.out.println(promoCodesList.get(i));
+            }
         }
-
     }
 
     public double matchingPromoCode(String input, String path) throws IOException {
@@ -234,44 +257,62 @@ public class FileHandler implements Importer {
     }
 
     public void writeAdmin(String user, String password, String path) throws IOException {
-        List<Admin> adminsList = new ArrayList<>();
-        adminsList = loadAdmins(path);
-        adminsList.add(new Admin(user, password));
+        boolean match = validation.doesItMatchAdmin(user, path);
+        if (!(match)) {
+            List<Admin> adminsList = new ArrayList<>();
+            adminsList = loadAdmins(path);
+            adminsList.add(new Admin(user, password));
 
-        List<String> adminsStrings = new ArrayList<>();
-        for (Admin admin : adminsList) {
-            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+            List<String> adminsStrings = new ArrayList<>();
+            for (Admin admin : adminsList) {
+                adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+            }
+
+            Files.write(Paths.get(path), adminsStrings);
+            System.out.println("Admin added sucessfully!");
+        } else {
+            System.out.println("Admin already exist");
         }
-
-        Files.write(Paths.get(path), adminsStrings);
     }
 
     public void updateAdmin(String user, String newPassword, String path) throws IOException {
-        deleteAdmin(user, path);
-        writeAdmin(user, newPassword, path);
+        boolean match = validation.doesItMatchAdmin(user, path);
+        if (!(match)) {
+            System.out.println("Admin doesn't exist");
+        } else {
+            deleteAdmin(user, path);
+            writeAdmin(user, newPassword, path);
+            System.out.println("Admin updated sucessfully!");
+        }
     }
 
     public void deleteAdmin(String user, String path) throws IOException {
-        List<Admin> adminsList = new ArrayList<>();
-        adminsList = loadAdmins(path);
+        boolean match = validation.doesItMatchAdmin(user, path);
+        if (!(match)) {
+            System.out.println("Admin doesn't exist");
+        } else {
+            List<Admin> adminsList = new ArrayList<>();
+            adminsList = loadAdmins(path);
 
-        int index = 0;
+            int index = 0;
 
-        for (Admin admin : adminsList) {
-            String oldUser = admin.getUser();
-            if (oldUser.equals(user)) {
-                adminsList.remove(index);
-                break;
+            for (Admin admin : adminsList) {
+                String oldUser = admin.getUser();
+                if (oldUser.equals(user)) {
+                    adminsList.remove(index);
+                    break;
+                }
+                index++;
             }
-            index++;
-        }
 
-        List<String> adminsStrings = new ArrayList<>();
-        for (Admin admin : adminsList) {
-            adminsStrings.add(admin.getUser() + "," + admin.getPassword());
-        }
+            List<String> adminsStrings = new ArrayList<>();
+            for (Admin admin : adminsList) {
+                adminsStrings.add(admin.getUser() + "," + admin.getPassword());
+            }
 
-        Files.write(Paths.get(path), adminsStrings);
+            Files.write(Paths.get(path), adminsStrings);
+            System.out.println("Admin deleted sucessfully!");
+        }
     }
 
     public void prntAdmin(String path) throws IOException {
