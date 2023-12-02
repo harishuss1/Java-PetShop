@@ -27,7 +27,7 @@ public class Helper {
 
         int age = valid.getPositiveInteger("Enter new age:");
         double price = valid.getPositiveDouble("Enter new price:");
-      
+
         scanner.nextLine();
 
         if (species.equals("Dog")) {
@@ -40,12 +40,12 @@ public class Helper {
             return new Cat(name, species, age, price, hasClaws);
         } else if (species.equals("Fish")) {
             // System.out.println("Enter new color:");
-            
+
             String color = valid.getStringInput("Enter new color:");
             return new Fish(name, species, age, price, color);
         } else if (species.equals("Parrot")) {
             // System.out.println("Enter new feather color:");
-            
+
             String featherColor = valid.getStringInput("Enter new feather color:");
             return new Parrot(name, species, age, price, featherColor);
         } else {
@@ -85,7 +85,6 @@ public class Helper {
 
         Animal addedAnimal = getAnimalDetailsFromUser(type);
 
-
         inventoryManager.addAnimal(addedAnimal);
         fileHandler.writeAnimal(addedAnimal, animalPath);
 
@@ -99,35 +98,36 @@ public class Helper {
         System.out.println("Updating an Animal:");
         System.out.println("Enter the name of the animal to update:");
         String oldName = scanner.nextLine();
-    
+
         Animal oldAnimal = inventoryManager.getAnimalByName(oldName);
-    
+
         if (oldAnimal == null) {
             System.out.println("Animal not found. Please try again.");
             updateAnimal();
             return;
         }
-    
+
         String species = oldAnimal.getSpecies();
-    
-        Animal newAnimal = getAnimalDetailsFromUser(species); 
-    
-        // if (inventoryManager.animalExists(newAnimal.getName()) && !newAnimal.getName().equalsIgnoreCase(oldName)) {
-        //     System.out.println("An animal with the new name already exists. Please choose a different name.");
-        //     updateAnimal(); 
-        //     return;
+
+        Animal newAnimal = getAnimalDetailsFromUser(species);
+
+        // if (inventoryManager.animalExists(newAnimal.getName()) &&
+        // !newAnimal.getName().equalsIgnoreCase(oldName)) {
+        // System.out.println("An animal with the new name already exists. Please choose
+        // a different name.");
+        // updateAnimal();
+        // return;
         // }
-    
+
         inventoryManager.updateAnimal(oldName, newAnimal);
         fileHandler.deleteAnimal(oldName, animalPath);
         fileHandler.writeAnimal(newAnimal, animalPath);
-    
+
         System.out.println("Animal updated successfully!");
-    
+
         spacing();
         // ManageInventory();
     }
-    
 
     public void removeAnimal() throws IOException {
         System.out.println("Removing an Animal:");
@@ -159,7 +159,6 @@ public class Helper {
         }
     }
 
-
     public void addPromoCode() throws IOException {
         System.out.println("New code: ");
         String codeToAdd = scanner.nextLine();
@@ -171,8 +170,6 @@ public class Helper {
         scanner.nextLine();
 
         fileHandler.writePromoCode(codeToAdd, discount, promoPath);
-
-        System.out.println("Promocode added sucessfully!");
 
         spacing();
     }
@@ -247,8 +244,6 @@ public class Helper {
         String password = scanner.nextLine();
 
         fileHandler.writeAdmin(adminToAdd, password, adminPath);
-
-        System.out.println("Admin added sucessfully!");
 
         spacing();
     }
